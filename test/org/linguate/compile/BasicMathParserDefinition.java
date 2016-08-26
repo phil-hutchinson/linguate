@@ -10,74 +10,74 @@ package org.linguate.compile;
  */
 public class BasicMathParserDefinition
 {
-    public final static TestImplGrammarTerminal NUMERIC_LITERAL = new TestImplGrammarTerminal("numeric");
-    public final static TestImplGrammarTerminal ADDITION_OPERATOR = new TestImplGrammarTerminal("+");
-    public final static TestImplGrammarTerminal MULTIPLICATION_OPERATOR = new TestImplGrammarTerminal("*");
-    public final static TestImplGrammarTerminal LEFT_BRACKET = new TestImplGrammarTerminal("(");
-    public final static TestImplGrammarTerminal RIGHT_BRACKET = new TestImplGrammarTerminal(")");
+    public final static BasicMathGrammarTerminal NUMERIC_LITERAL = new BasicMathGrammarTerminal("numeric");
+    public final static BasicMathGrammarTerminal ADDITION_OPERATOR = new BasicMathGrammarTerminal("+");
+    public final static BasicMathGrammarTerminal MULTIPLICATION_OPERATOR = new BasicMathGrammarTerminal("*");
+    public final static BasicMathGrammarTerminal LEFT_BRACKET = new BasicMathGrammarTerminal("(");
+    public final static BasicMathGrammarTerminal RIGHT_BRACKET = new BasicMathGrammarTerminal(")");
     
-    public final static TestImplGrammarNonTerminal TERM = new TestImplGrammarNonTerminal("T");
-    public final static TestImplGrammarNonTerminal EXPRESSION = new TestImplGrammarNonTerminal("E");
-    public final static TestImplGrammarNonTerminal FACTOR = new TestImplGrammarNonTerminal("F");
+    public final static BasicMathGrammarNonTerminal TERM = new BasicMathGrammarNonTerminal("T");
+    public final static BasicMathGrammarNonTerminal EXPRESSION = new BasicMathGrammarNonTerminal("E");
+    public final static BasicMathGrammarNonTerminal FACTOR = new BasicMathGrammarNonTerminal("F");
     
-    public final static TestImplGrammarProduction RULE_A = new TestImplGrammarProduction(
+    public final static BasicMathGrammarProduction RULE_A = new BasicMathGrammarProduction(
             EXPRESSION,
             EXPRESSION,
             ADDITION_OPERATOR,
             TERM
     );
-    public final static TestImplGrammarProduction RULE_B = new TestImplGrammarProduction(
+    public final static BasicMathGrammarProduction RULE_B = new BasicMathGrammarProduction(
             EXPRESSION,
             TERM
     );
-    public final static TestImplGrammarProduction RULE_C = new TestImplGrammarProduction(
+    public final static BasicMathGrammarProduction RULE_C = new BasicMathGrammarProduction(
             TERM,
             TERM,
             MULTIPLICATION_OPERATOR,
             FACTOR
     );
-    public final static TestImplGrammarProduction RULE_D = new TestImplGrammarProduction(
+    public final static BasicMathGrammarProduction RULE_D = new BasicMathGrammarProduction(
             TERM,
             FACTOR
     );
-    public final static TestImplGrammarProduction RULE_E = new TestImplGrammarProduction(
+    public final static BasicMathGrammarProduction RULE_E = new BasicMathGrammarProduction(
             FACTOR,
             LEFT_BRACKET,
             EXPRESSION,
             RIGHT_BRACKET
     );
-    public final static TestImplGrammarProduction RULE_F = new TestImplGrammarProduction(
+    public final static BasicMathGrammarProduction RULE_F = new BasicMathGrammarProduction(
             FACTOR,
             NUMERIC_LITERAL
     );
 
-    private final static TestImplLRParserState STATE_0 = new TestImplLRParserState("0");
-    private final static TestImplLRParserState STATE_1 = new TestImplLRParserState("1");
-    private final static TestImplLRParserState STATE_2 = new TestImplLRParserState("2");
-    private final static TestImplLRParserState STATE_3 = new TestImplLRParserState("3");
-    private final static TestImplLRParserState STATE_4 = new TestImplLRParserState("4");
-    private final static TestImplLRParserState STATE_5 = new TestImplLRParserState("5");
-    private final static TestImplLRParserState STATE_6 = new TestImplLRParserState("6");
-    private final static TestImplLRParserState STATE_7 = new TestImplLRParserState("7");
-    private final static TestImplLRParserState STATE_8 = new TestImplLRParserState("8");
-    private final static TestImplLRParserState STATE_9 = new TestImplLRParserState("9");
-    private final static TestImplLRParserState STATE_10 = new TestImplLRParserState("10");
-    private final static TestImplLRParserState STATE_11 = new TestImplLRParserState("11");
+    private final static BasicMathLRParserState STATE_0 = new BasicMathLRParserState("0");
+    private final static BasicMathLRParserState STATE_1 = new BasicMathLRParserState("1");
+    private final static BasicMathLRParserState STATE_2 = new BasicMathLRParserState("2");
+    private final static BasicMathLRParserState STATE_3 = new BasicMathLRParserState("3");
+    private final static BasicMathLRParserState STATE_4 = new BasicMathLRParserState("4");
+    private final static BasicMathLRParserState STATE_5 = new BasicMathLRParserState("5");
+    private final static BasicMathLRParserState STATE_6 = new BasicMathLRParserState("6");
+    private final static BasicMathLRParserState STATE_7 = new BasicMathLRParserState("7");
+    private final static BasicMathLRParserState STATE_8 = new BasicMathLRParserState("8");
+    private final static BasicMathLRParserState STATE_9 = new BasicMathLRParserState("9");
+    private final static BasicMathLRParserState STATE_10 = new BasicMathLRParserState("10");
+    private final static BasicMathLRParserState STATE_11 = new BasicMathLRParserState("11");
     
-    private final static TestImplLRParserAction ACCEPT_INPUT = new TestImplLRParserAction();
-    private final static TestImplLRParserAction SHIFT_TO_STATE_4 = new TestImplLRParserAction(STATE_4);
-    private final static TestImplLRParserAction SHIFT_TO_STATE_5 = new TestImplLRParserAction(STATE_5);
-    private final static TestImplLRParserAction SHIFT_TO_STATE_6 = new TestImplLRParserAction(STATE_6);
-    private final static TestImplLRParserAction SHIFT_TO_STATE_7 = new TestImplLRParserAction(STATE_7);
-    private final static TestImplLRParserAction SHIFT_TO_STATE_11 = new TestImplLRParserAction(STATE_11);
-    private final static TestImplLRParserAction REDUCE_WITH_RULE_A = new TestImplLRParserAction(RULE_A);
-    private final static TestImplLRParserAction REDUCE_WITH_RULE_B = new TestImplLRParserAction(RULE_B);
-    private final static TestImplLRParserAction REDUCE_WITH_RULE_C = new TestImplLRParserAction(RULE_C);
-    private final static TestImplLRParserAction REDUCE_WITH_RULE_D = new TestImplLRParserAction(RULE_D);
-    private final static TestImplLRParserAction REDUCE_WITH_RULE_E = new TestImplLRParserAction(RULE_E);
-    private final static TestImplLRParserAction REDUCE_WITH_RULE_F = new TestImplLRParserAction(RULE_F);
+    private final static BasicMathLRParserAction ACCEPT_INPUT = new BasicMathLRParserAction();
+    private final static BasicMathLRParserAction SHIFT_TO_STATE_4 = new BasicMathLRParserAction(STATE_4);
+    private final static BasicMathLRParserAction SHIFT_TO_STATE_5 = new BasicMathLRParserAction(STATE_5);
+    private final static BasicMathLRParserAction SHIFT_TO_STATE_6 = new BasicMathLRParserAction(STATE_6);
+    private final static BasicMathLRParserAction SHIFT_TO_STATE_7 = new BasicMathLRParserAction(STATE_7);
+    private final static BasicMathLRParserAction SHIFT_TO_STATE_11 = new BasicMathLRParserAction(STATE_11);
+    private final static BasicMathLRParserAction REDUCE_WITH_RULE_A = new BasicMathLRParserAction(RULE_A);
+    private final static BasicMathLRParserAction REDUCE_WITH_RULE_B = new BasicMathLRParserAction(RULE_B);
+    private final static BasicMathLRParserAction REDUCE_WITH_RULE_C = new BasicMathLRParserAction(RULE_C);
+    private final static BasicMathLRParserAction REDUCE_WITH_RULE_D = new BasicMathLRParserAction(RULE_D);
+    private final static BasicMathLRParserAction REDUCE_WITH_RULE_E = new BasicMathLRParserAction(RULE_E);
+    private final static BasicMathLRParserAction REDUCE_WITH_RULE_F = new BasicMathLRParserAction(RULE_F);
     
-    public final static TestImplLRParserDefinition definition;
+    public final static BasicMathLRParserDefinition definition;
     
     static 
     {
@@ -138,7 +138,7 @@ public class BasicMathParserDefinition
         STATE_11.actions.put(RIGHT_BRACKET, REDUCE_WITH_RULE_E);
         STATE_11.endOfInputAction = REDUCE_WITH_RULE_E;
         
-        definition = new TestImplLRParserDefinition(STATE_0);
+        definition = new BasicMathLRParserDefinition(STATE_0);
     }
     //termAndExpresssionParserDefinition = new TestImplLRParserDefinition();
     

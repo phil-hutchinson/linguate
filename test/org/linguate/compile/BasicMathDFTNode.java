@@ -10,24 +10,24 @@ import java.util.*;
  *
  * @author Phil Hutchinson
  */
-public class TestImplParseNode implements ParseNode
+public class BasicMathDFTNode implements DFTNode
 {
-    private TestImplGrammarSymbol element;
+    private BasicMathGrammarSymbol element;
     public int value;
-    public final ArrayList<TestImplParseNode> children = new ArrayList<>();
+    public final ArrayList<BasicMathDFTNode> children = new ArrayList<>();
 
-    public TestImplParseNode(TestImplGrammarSymbol element)
+    public BasicMathDFTNode(BasicMathGrammarSymbol element)
     {
         this(element, null);
     }
     
-    public TestImplParseNode(TestImplGrammarSymbol element, int value)
+    public BasicMathDFTNode(BasicMathGrammarSymbol element, int value)
     {
         this(element, null);
         this.value = value;
     }
     
-    public TestImplParseNode(TestImplGrammarSymbol element, List<TestImplParseNode> children)
+    public BasicMathDFTNode(BasicMathGrammarSymbol element, List<BasicMathDFTNode> children)
     {
         this.element = element;
         if (children != null)

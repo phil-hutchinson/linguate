@@ -8,17 +8,17 @@ package org.linguate.compile;
  *
  * @author Phil Hutchinson
  */
-public class TestImplToken implements Token
+public class BasicMathToken implements Token
 {
-    TestImplGrammarTerminal element;
+    BasicMathGrammarTerminal element;
     String contents;
 
-    public TestImplToken(TestImplGrammarTerminal element)
+    public BasicMathToken(BasicMathGrammarTerminal element)
     {
         this(element, null);
     }
 
-    public TestImplToken(TestImplGrammarTerminal element, String contents)
+    public BasicMathToken(BasicMathGrammarTerminal element, String contents)
     {
         this.element = element;
         this.contents = contents;

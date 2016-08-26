@@ -11,9 +11,9 @@ package org.linguate.compile;
 class LRParserStackState
 {
     public LRParserState state;
-    public ParseNode node;
+    public DFTNode node;
 
-    public LRParserStackState(LRParserState state, ParseNode node)
+    public LRParserStackState(LRParserState state, DFTNode node)
     {
         this.state = state;
         this.node = node;

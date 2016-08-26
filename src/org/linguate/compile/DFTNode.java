@@ -8,10 +8,7 @@ package org.linguate.compile;
  *
  * @author Phil Hutchinson
  */
-public class TestImplGrammarNonTerminal extends TestImplGrammarSymbol implements GrammarNonTerminal
+public interface DFTNode
 {
-    public TestImplGrammarNonTerminal(String name)
-    {
-        super(name);
-    }
+    GrammarSymbol getElement();
 }

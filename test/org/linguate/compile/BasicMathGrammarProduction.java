@@ -11,12 +11,12 @@ import java.util.*;
  *
  * @author Phil Hutchinson
  */
-public class TestImplGrammarProduction implements GrammarProduction
+public class BasicMathGrammarProduction implements GrammarProduction
 {
-    public TestImplGrammarNonTerminal head;
+    public BasicMathGrammarNonTerminal head;
     public final ArrayList<GrammarSymbol> body = new ArrayList<>();
     
-    TestImplGrammarProduction(TestImplGrammarNonTerminal head, GrammarSymbol... body)
+    BasicMathGrammarProduction(BasicMathGrammarNonTerminal head, GrammarSymbol... body)
     {
         this.head = head;
         for(GrammarSymbol bodyElement : body)

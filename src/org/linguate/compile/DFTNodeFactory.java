@@ -4,15 +4,14 @@
  */
 package org.linguate.compile;
 
+import java.util.List;
 
 /**
  *
  * @author Phil Hutchinson
  */
-public class TestImplGrammarTerminal extends TestImplGrammarSymbol implements GrammarTerminal
+public interface DFTNodeFactory
 {
-    public TestImplGrammarTerminal(String name)
-    {
-        super(name);
-    }
+    DFTNode CreateInnerNode(GrammarProduction production, List<DFTNode> children);
+    DFTNode CreateLeafNode(Token element);
 }

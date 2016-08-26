@@ -31,7 +31,7 @@ public class LRParserTest
     @BeforeClass
     public static void setUpClass()
     {
-        basicMathParseNodeFactory = new BasicMathParseNodeFactory();
+        basicMathParseNodeFactory = new BasicMathDFTNodeFactory();
     }
     
     @AfterClass
@@ -49,15 +49,15 @@ public class LRParserTest
     {
     }
 
-    static BasicMathParseNodeFactory basicMathParseNodeFactory;
+    static BasicMathDFTNodeFactory basicMathParseNodeFactory;
     
     @Test
     public void Parse_NullInput() throws ParserException
     {
         LRParser instance = new LRParser(BasicMathParserDefinition.definition, basicMathParseNodeFactory);
-        ArrayList<TestImplToken> input = null;
-        ParseNode expectedResult = null;
-        ParseNode result = instance.Parse(input);
+        ArrayList<BasicMathToken> input = null;
+        DFTNode expectedResult = null;
+        DFTNode result = instance.Parse(input);
         assertEquals("Null input should produce null output.", expectedResult, result);
     }
     
@@ -65,9 +65,9 @@ public class LRParserTest
     public void Parse_EmptyInput() throws ParserException
     {
         LRParser instance = new LRParser(BasicMathParserDefinition.definition, basicMathParseNodeFactory);
-        ArrayList<TestImplToken> input = new ArrayList<>();
-        ParseNode expectedResult = null;
-        ParseNode result = instance.Parse(input);
+        ArrayList<BasicMathToken> input = new ArrayList<>();
+        DFTNode expectedResult = null;
+        DFTNode result = instance.Parse(input);
         assertEquals("Null input should produce null output.", expectedResult, result);
     }
     
@@ -75,15 +75,15 @@ public class LRParserTest
     public void Parse_SingleNumber_CheckTree() throws ParserException
     {
         LRParser instance = new LRParser(BasicMathParserDefinition.definition, basicMathParseNodeFactory);
-        ArrayList<TestImplToken> input = new ArrayList<>();
-        input.add(new TestImplToken(NUMERIC_LITERAL));
-        TestImplParseNode result = (TestImplParseNode) instance.Parse(input);
+        ArrayList<BasicMathToken> input = new ArrayList<>();
+        input.add(new BasicMathToken(NUMERIC_LITERAL));
+        BasicMathDFTNode result = (BasicMathDFTNode) instance.Parse(input);
         assertEquals("Element 0 (root element) should be Expression.", result.getElement(), EXPRESSION);
-        TestImplParseNode ele0_0 = result.children.get(0);
+        BasicMathDFTNode ele0_0 = result.children.get(0);
         assertEquals("Element 0,0 should be Term.", ele0_0.getElement(), TERM);
-        TestImplParseNode ele0_0_0 = ele0_0.children.get(0);
+        BasicMathDFTNode ele0_0_0 = ele0_0.children.get(0);
         assertEquals("Element 0,0,0 should be Factor.", ele0_0_0.getElement(), FACTOR);
-        TestImplParseNode ele0_0_0_0 = ele0_0_0.children.get(0);
+        BasicMathDFTNode ele0_0_0_0 = ele0_0_0.children.get(0);
         assertEquals("Element 0,0,0,0 should be Numeric Litearl.", ele0_0_0_0.getElement(), NUMERIC_LITERAL);
     }
     
@@ -91,27 +91,27 @@ public class LRParserTest
     public void Parse_SimpleAddition_CheckTree() throws ParserException
     {
         LRParser instance = new LRParser(BasicMathParserDefinition.definition, basicMathParseNodeFactory);
-        ArrayList<TestImplToken> input = new ArrayList<>();
-        input.add(new TestImplToken(NUMERIC_LITERAL));
-        input.add(new TestImplToken(ADDITION_OPERATOR));
-        input.add(new TestImplToken(NUMERIC_LITERAL));
-        TestImplParseNode result = (TestImplParseNode) instance.Parse(input);
+        ArrayList<BasicMathToken> input = new ArrayList<>();
+        input.add(new BasicMathToken(NUMERIC_LITERAL));
+        input.add(new BasicMathToken(ADDITION_OPERATOR));
+        input.add(new BasicMathToken(NUMERIC_LITERAL));
+        BasicMathDFTNode result = (BasicMathDFTNode) instance.Parse(input);
         assertEquals("Element 0 (root element) should be Expression.", result.getElement(), EXPRESSION);
-        TestImplParseNode ele0_0 = result.children.get(0);
+        BasicMathDFTNode ele0_0 = result.children.get(0);
         assertEquals("Element 0,0 should be Expression.", ele0_0.getElement(), EXPRESSION);
-        TestImplParseNode ele0_0_0 = ele0_0.children.get(0);
+        BasicMathDFTNode ele0_0_0 = ele0_0.children.get(0);
         assertEquals("Element 0,0,0 should be Term.", ele0_0_0.getElement(), TERM);
-        TestImplParseNode ele0_0_0_0 = ele0_0_0.children.get(0);
+        BasicMathDFTNode ele0_0_0_0 = ele0_0_0.children.get(0);
         assertEquals("Element 0,0,0,0 should be Factor.", ele0_0_0_0.getElement(), FACTOR);
-        TestImplParseNode ele0_0_0_0_0 = ele0_0_0_0.children.get(0);
+        BasicMathDFTNode ele0_0_0_0_0 = ele0_0_0_0.children.get(0);
         assertEquals("Element 0,0,0,0,0 should be Numeric Literal.", ele0_0_0_0_0.getElement(), NUMERIC_LITERAL);
-        TestImplParseNode ele0_1 = result.children.get(1);
+        BasicMathDFTNode ele0_1 = result.children.get(1);
         assertEquals("Element 0,1 should be Addition Operator.", ele0_1.getElement(), ADDITION_OPERATOR);
-        TestImplParseNode ele0_2 = result.children.get(2);
+        BasicMathDFTNode ele0_2 = result.children.get(2);
         assertEquals("Element 0,2 should be Term.", ele0_2.getElement(), TERM);
-        TestImplParseNode ele0_2_0 = ele0_2.children.get(0);
+        BasicMathDFTNode ele0_2_0 = ele0_2.children.get(0);
         assertEquals("Element 0,2,0 should be Factor.", ele0_2_0.getElement(), FACTOR);
-        TestImplParseNode ele0_2_0_0 = ele0_2_0.children.get(0);
+        BasicMathDFTNode ele0_2_0_0 = ele0_2_0.children.get(0);
         assertEquals("Element 0,2,0,0 should be Numeric Literal.", ele0_2_0_0.getElement(), NUMERIC_LITERAL);
     }
     
@@ -119,12 +119,12 @@ public class LRParserTest
     public void Parse_SimpleAddition_EvaluateValue() throws ParserException
     {
         LRParser instance = new LRParser(BasicMathParserDefinition.definition, basicMathParseNodeFactory);
-        ArrayList<TestImplToken> input = new ArrayList<>();
-        input.add(new TestImplToken(NUMERIC_LITERAL, "18"));
-        input.add(new TestImplToken(ADDITION_OPERATOR));
-        input.add(new TestImplToken(NUMERIC_LITERAL, "7"));
+        ArrayList<BasicMathToken> input = new ArrayList<>();
+        input.add(new BasicMathToken(NUMERIC_LITERAL, "18"));
+        input.add(new BasicMathToken(ADDITION_OPERATOR));
+        input.add(new BasicMathToken(NUMERIC_LITERAL, "7"));
         int expectedValue = 18 + 7;
-        TestImplParseNode result = (TestImplParseNode) instance.Parse(input);
+        BasicMathDFTNode result = (BasicMathDFTNode) instance.Parse(input);
         assertEquals(expectedValue, result.value);
     }
     
@@ -132,11 +132,11 @@ public class LRParserTest
     public void Parse_SimpleMultiplication_EvaluateValue() throws ParserException
     {
         LRParser instance = new LRParser(BasicMathParserDefinition.definition, basicMathParseNodeFactory);
-        ArrayList<TestImplToken> input = new ArrayList<>();
-        input.add(new TestImplToken(NUMERIC_LITERAL, "8"));
-        input.add(new TestImplToken(MULTIPLICATION_OPERATOR));
-        input.add(new TestImplToken(NUMERIC_LITERAL, "7"));
-        TestImplParseNode result = (TestImplParseNode) instance.Parse(input);
+        ArrayList<BasicMathToken> input = new ArrayList<>();
+        input.add(new BasicMathToken(NUMERIC_LITERAL, "8"));
+        input.add(new BasicMathToken(MULTIPLICATION_OPERATOR));
+        input.add(new BasicMathToken(NUMERIC_LITERAL, "7"));
+        BasicMathDFTNode result = (BasicMathDFTNode) instance.Parse(input);
         int expectedValue = 8 * 7;
         assertEquals(expectedValue, result.value);
     }
@@ -145,13 +145,13 @@ public class LRParserTest
     public void Parse_OrderOfOperations_EvaluateValue() throws ParserException
     {
         LRParser instance = new LRParser(BasicMathParserDefinition.definition, basicMathParseNodeFactory);
-        ArrayList<TestImplToken> input = new ArrayList<>();
-        input.add(new TestImplToken(NUMERIC_LITERAL, "5"));
-        input.add(new TestImplToken(ADDITION_OPERATOR));
-        input.add(new TestImplToken(NUMERIC_LITERAL, "2"));
-        input.add(new TestImplToken(MULTIPLICATION_OPERATOR));
-        input.add(new TestImplToken(NUMERIC_LITERAL, "9"));
-        TestImplParseNode result = (TestImplParseNode) instance.Parse(input);
+        ArrayList<BasicMathToken> input = new ArrayList<>();
+        input.add(new BasicMathToken(NUMERIC_LITERAL, "5"));
+        input.add(new BasicMathToken(ADDITION_OPERATOR));
+        input.add(new BasicMathToken(NUMERIC_LITERAL, "2"));
+        input.add(new BasicMathToken(MULTIPLICATION_OPERATOR));
+        input.add(new BasicMathToken(NUMERIC_LITERAL, "9"));
+        BasicMathDFTNode result = (BasicMathDFTNode) instance.Parse(input);
         int expectedValue = 5 + 2 * 9;
         assertEquals(expectedValue, result.value);
     }
@@ -160,15 +160,15 @@ public class LRParserTest
     public void Parse_Brackets_EvaluateValue() throws ParserException
     {
         LRParser instance = new LRParser(BasicMathParserDefinition.definition, basicMathParseNodeFactory);
-        ArrayList<TestImplToken> input = new ArrayList<>();
-        input.add(new TestImplToken(LEFT_BRACKET));
-        input.add(new TestImplToken(NUMERIC_LITERAL, "5"));
-        input.add(new TestImplToken(ADDITION_OPERATOR));
-        input.add(new TestImplToken(NUMERIC_LITERAL, "2"));
-        input.add(new TestImplToken(RIGHT_BRACKET));
-        input.add(new TestImplToken(MULTIPLICATION_OPERATOR));
-        input.add(new TestImplToken(NUMERIC_LITERAL, "9"));
-        TestImplParseNode result = (TestImplParseNode) instance.Parse(input);
+        ArrayList<BasicMathToken> input = new ArrayList<>();
+        input.add(new BasicMathToken(LEFT_BRACKET));
+        input.add(new BasicMathToken(NUMERIC_LITERAL, "5"));
+        input.add(new BasicMathToken(ADDITION_OPERATOR));
+        input.add(new BasicMathToken(NUMERIC_LITERAL, "2"));
+        input.add(new BasicMathToken(RIGHT_BRACKET));
+        input.add(new BasicMathToken(MULTIPLICATION_OPERATOR));
+        input.add(new BasicMathToken(NUMERIC_LITERAL, "9"));
+        BasicMathDFTNode result = (BasicMathDFTNode) instance.Parse(input);
         int expectedValue = (5 + 2) * 9;
         assertEquals(expectedValue, result.value);
     }
@@ -177,25 +177,25 @@ public class LRParserTest
     public void Parse_ComplexExpression_EvaluateValue() throws ParserException
     {
         LRParser instance = new LRParser(BasicMathParserDefinition.definition, basicMathParseNodeFactory);
-        ArrayList<TestImplToken> input = new ArrayList<>();
-        input.add(new TestImplToken(LEFT_BRACKET));
-        input.add(new TestImplToken(NUMERIC_LITERAL, "1"));
-        input.add(new TestImplToken(ADDITION_OPERATOR));
-        input.add(new TestImplToken(NUMERIC_LITERAL, "5"));
-        input.add(new TestImplToken(MULTIPLICATION_OPERATOR));
-        input.add(new TestImplToken(NUMERIC_LITERAL, "2"));
-        input.add(new TestImplToken(RIGHT_BRACKET));
-        input.add(new TestImplToken(MULTIPLICATION_OPERATOR));
-        input.add(new TestImplToken(LEFT_BRACKET));
-        input.add(new TestImplToken(NUMERIC_LITERAL, "9"));
-        input.add(new TestImplToken(RIGHT_BRACKET));
-        input.add(new TestImplToken(MULTIPLICATION_OPERATOR));
-        input.add(new TestImplToken(LEFT_BRACKET));
-        input.add(new TestImplToken(NUMERIC_LITERAL, "2"));
-        input.add(new TestImplToken(ADDITION_OPERATOR));
-        input.add(new TestImplToken(NUMERIC_LITERAL, "1"));
-        input.add(new TestImplToken(RIGHT_BRACKET));
-        TestImplParseNode result = (TestImplParseNode) instance.Parse(input);
+        ArrayList<BasicMathToken> input = new ArrayList<>();
+        input.add(new BasicMathToken(LEFT_BRACKET));
+        input.add(new BasicMathToken(NUMERIC_LITERAL, "1"));
+        input.add(new BasicMathToken(ADDITION_OPERATOR));
+        input.add(new BasicMathToken(NUMERIC_LITERAL, "5"));
+        input.add(new BasicMathToken(MULTIPLICATION_OPERATOR));
+        input.add(new BasicMathToken(NUMERIC_LITERAL, "2"));
+        input.add(new BasicMathToken(RIGHT_BRACKET));
+        input.add(new BasicMathToken(MULTIPLICATION_OPERATOR));
+        input.add(new BasicMathToken(LEFT_BRACKET));
+        input.add(new BasicMathToken(NUMERIC_LITERAL, "9"));
+        input.add(new BasicMathToken(RIGHT_BRACKET));
+        input.add(new BasicMathToken(MULTIPLICATION_OPERATOR));
+        input.add(new BasicMathToken(LEFT_BRACKET));
+        input.add(new BasicMathToken(NUMERIC_LITERAL, "2"));
+        input.add(new BasicMathToken(ADDITION_OPERATOR));
+        input.add(new BasicMathToken(NUMERIC_LITERAL, "1"));
+        input.add(new BasicMathToken(RIGHT_BRACKET));
+        BasicMathDFTNode result = (BasicMathDFTNode) instance.Parse(input);
         int expectedValue = (1+5*2)*(9)*(2+1);
         assertEquals(expectedValue, result.value);
     }
@@ -204,29 +204,29 @@ public class LRParserTest
     public void Parse_NestedBrackets_EvaluateValue() throws ParserException
     {
         LRParser instance = new LRParser(BasicMathParserDefinition.definition, basicMathParseNodeFactory);
-        ArrayList<TestImplToken> input = new ArrayList<>();
-        input.add(new TestImplToken(LEFT_BRACKET));
-        input.add(new TestImplToken(LEFT_BRACKET));
-        input.add(new TestImplToken(LEFT_BRACKET));
-        input.add(new TestImplToken(LEFT_BRACKET));
-        input.add(new TestImplToken(LEFT_BRACKET));
-        input.add(new TestImplToken(NUMERIC_LITERAL, "2"));
-        input.add(new TestImplToken(RIGHT_BRACKET));
-        input.add(new TestImplToken(ADDITION_OPERATOR));
-        input.add(new TestImplToken(NUMERIC_LITERAL, "1"));
-        input.add(new TestImplToken(RIGHT_BRACKET));
-        input.add(new TestImplToken(MULTIPLICATION_OPERATOR));
-        input.add(new TestImplToken(NUMERIC_LITERAL, "2"));
-        input.add(new TestImplToken(RIGHT_BRACKET));
-        input.add(new TestImplToken(ADDITION_OPERATOR));
-        input.add(new TestImplToken(NUMERIC_LITERAL, "1"));
-        input.add(new TestImplToken(RIGHT_BRACKET));
-        input.add(new TestImplToken(MULTIPLICATION_OPERATOR));
-        input.add(new TestImplToken(NUMERIC_LITERAL, "2"));
-        input.add(new TestImplToken(RIGHT_BRACKET));
-        input.add(new TestImplToken(ADDITION_OPERATOR));
-        input.add(new TestImplToken(NUMERIC_LITERAL, "1"));
-        TestImplParseNode result = (TestImplParseNode) instance.Parse(input);
+        ArrayList<BasicMathToken> input = new ArrayList<>();
+        input.add(new BasicMathToken(LEFT_BRACKET));
+        input.add(new BasicMathToken(LEFT_BRACKET));
+        input.add(new BasicMathToken(LEFT_BRACKET));
+        input.add(new BasicMathToken(LEFT_BRACKET));
+        input.add(new BasicMathToken(LEFT_BRACKET));
+        input.add(new BasicMathToken(NUMERIC_LITERAL, "2"));
+        input.add(new BasicMathToken(RIGHT_BRACKET));
+        input.add(new BasicMathToken(ADDITION_OPERATOR));
+        input.add(new BasicMathToken(NUMERIC_LITERAL, "1"));
+        input.add(new BasicMathToken(RIGHT_BRACKET));
+        input.add(new BasicMathToken(MULTIPLICATION_OPERATOR));
+        input.add(new BasicMathToken(NUMERIC_LITERAL, "2"));
+        input.add(new BasicMathToken(RIGHT_BRACKET));
+        input.add(new BasicMathToken(ADDITION_OPERATOR));
+        input.add(new BasicMathToken(NUMERIC_LITERAL, "1"));
+        input.add(new BasicMathToken(RIGHT_BRACKET));
+        input.add(new BasicMathToken(MULTIPLICATION_OPERATOR));
+        input.add(new BasicMathToken(NUMERIC_LITERAL, "2"));
+        input.add(new BasicMathToken(RIGHT_BRACKET));
+        input.add(new BasicMathToken(ADDITION_OPERATOR));
+        input.add(new BasicMathToken(NUMERIC_LITERAL, "1"));
+        BasicMathDFTNode result = (BasicMathDFTNode) instance.Parse(input);
         int expectedValue = (((((2)+1)*2)+1)*2)+1;
         assertEquals(expectedValue, result.value);
     }
@@ -235,9 +235,9 @@ public class LRParserTest
     public void Parse_InvalidInput_Throws() throws ParserException
     {
         LRParser instance = new LRParser(BasicMathParserDefinition.definition, basicMathParseNodeFactory);
-        ArrayList<TestImplToken> input = new ArrayList<>();
-        input.add(new TestImplToken(NUMERIC_LITERAL));
-        input.add(new TestImplToken(ADDITION_OPERATOR));
+        ArrayList<BasicMathToken> input = new ArrayList<>();
+        input.add(new BasicMathToken(NUMERIC_LITERAL));
+        input.add(new BasicMathToken(ADDITION_OPERATOR));
         expectedException.expect(ParserException.class);
         instance.Parse(input);
     }

@@ -4,14 +4,15 @@
  */
 package org.linguate.compile;
 
-import java.util.List;
 
 /**
  *
  * @author Phil Hutchinson
  */
-public interface ParseNodeFactory
+public class BasicMathGrammarTerminal extends BasicMathGrammarSymbol implements GrammarTerminal
 {
-    ParseNode CreateInnerNode(GrammarProduction production, List<ParseNode> children);
-    ParseNode CreateLeafNode(Token element);
+    public BasicMathGrammarTerminal(String name)
+    {
+        super(name);
+    }
 }

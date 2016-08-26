@@ -8,11 +8,11 @@ package org.linguate.compile;
  *
  * @author Phil Hutchinson
  */
-public class TestImplLRParserDefinition implements LRParserDefinition
+public class BasicMathLRParserDefinition implements LRParserDefinition
 {
     private LRParserState startState;
 
-    public TestImplLRParserDefinition(LRParserState startState)
+    public BasicMathLRParserDefinition(LRParserState startState)
     {
         this.startState = startState;
     }

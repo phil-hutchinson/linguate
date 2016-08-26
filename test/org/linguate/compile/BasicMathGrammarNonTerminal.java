@@ -8,7 +8,10 @@ package org.linguate.compile;
  *
  * @author Phil Hutchinson
  */
-public interface ParseNode
+public class BasicMathGrammarNonTerminal extends BasicMathGrammarSymbol implements GrammarNonTerminal
 {
-    GrammarSymbol getElement();
+    public BasicMathGrammarNonTerminal(String name)
+    {
+        super(name);
+    }
 }

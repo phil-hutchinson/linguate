@@ -10,20 +10,20 @@ import java.util.*;
  *
  * @author Phil Hutchinson
  */
-public class BasicMathParseNodeFactory implements ParseNodeFactory
+public class BasicMathDFTNodeFactory implements DFTNodeFactory
 {
     
     @Override
-    public ParseNode CreateInnerNode(GrammarProduction production, List<ParseNode> children)
+    public DFTNode CreateInnerNode(GrammarProduction production, List<DFTNode> children)
     {
-        TestImplGrammarNonTerminal testImplElement = (TestImplGrammarNonTerminal) production.getHead();
-        ArrayList<TestImplParseNode> typedChildren = new ArrayList<>();
-        for(ParseNode child : children)
+        BasicMathGrammarNonTerminal testImplElement = (BasicMathGrammarNonTerminal) production.getHead();
+        ArrayList<BasicMathDFTNode> typedChildren = new ArrayList<>();
+        for(DFTNode child : children)
         {
-            typedChildren.add((TestImplParseNode)child);
+            typedChildren.add((BasicMathDFTNode)child);
         }
         
-        TestImplParseNode result = new TestImplParseNode(testImplElement, typedChildren);
+        BasicMathDFTNode result = new BasicMathDFTNode(testImplElement, typedChildren);
 
         if (production == BasicMathParserDefinition.RULE_A)
         {
@@ -50,15 +50,15 @@ public class BasicMathParseNodeFactory implements ParseNodeFactory
     }
 
     @Override
-    public ParseNode CreateLeafNode(Token element)
+    public DFTNode CreateLeafNode(Token element)
     {
         if (element.getContents() == null)
         {
-            return new TestImplParseNode((TestImplGrammarSymbol)element.getElement());
+            return new BasicMathDFTNode((BasicMathGrammarSymbol)element.getElement());
         }
         else
         {
-            return new TestImplParseNode((TestImplGrammarSymbol)element.getElement(), Integer.parseInt(element.getContents()));
+            return new BasicMathDFTNode((BasicMathGrammarSymbol)element.getElement(), Integer.parseInt(element.getContents()));
         }
     }
     

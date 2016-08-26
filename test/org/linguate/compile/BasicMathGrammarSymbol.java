@@ -8,11 +8,11 @@ package org.linguate.compile;
  *
  * @author Phil Hutchinson
  */
-public class TestImplGrammarSymbol implements GrammarSymbol
+public class BasicMathGrammarSymbol implements GrammarSymbol
 {
     private String name;
 
-    public TestImplGrammarSymbol(String name)
+    public BasicMathGrammarSymbol(String name)
     {
         this.name = name;
     }

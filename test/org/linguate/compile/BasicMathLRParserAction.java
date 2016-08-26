@@ -8,24 +8,24 @@ package org.linguate.compile;
  *
  * @author Phil Hutchinson
  */
-public class TestImplLRParserAction implements LRParserAction
+public class BasicMathLRParserAction implements LRParserAction
 {
     private ActionType action;
-    private TestImplLRParserState shiftState;
-    private TestImplGrammarProduction reduceRule;
+    private BasicMathLRParserState shiftState;
+    private BasicMathGrammarProduction reduceRule;
 
-    public TestImplLRParserAction()
+    public BasicMathLRParserAction()
     {
         action = ActionType.Accept;
     }
     
-    public TestImplLRParserAction(TestImplLRParserState shiftState)
+    public BasicMathLRParserAction(BasicMathLRParserState shiftState)
     {
         action = ActionType.Shift;
         this.shiftState = shiftState;
     }
 
-    public TestImplLRParserAction(TestImplGrammarProduction reduceRule)
+    public BasicMathLRParserAction(BasicMathGrammarProduction reduceRule)
     {
         action = ActionType.Reduce;
         this.reduceRule = reduceRule;

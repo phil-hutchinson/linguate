@@ -10,14 +10,14 @@ import java.util.*;
  *
  * @author Phil Hutchinson
  */
-public class TestImplLRParserState implements LRParserState
+public class BasicMathLRParserState implements LRParserState
 {
     public final Map<GrammarTerminal,LRParserAction> actions;
     public final Map<GrammarNonTerminal,LRParserState> postReductionStates;
     public LRParserAction endOfInputAction;
     private String name;
 
-    public TestImplLRParserState(String name)
+    public BasicMathLRParserState(String name)
     {
         this.name = name;
         actions = new HashMap<>();

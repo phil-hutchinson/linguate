@@ -17,20 +17,20 @@ import org.linguate.compile.LRParserAction.ActionType;
 public class LRParser
 {
     private final LRParserDefinition definition;
-    private final ParseNodeFactory nodeFactory;
+    private final DFTNodeFactory nodeFactory;
     
-    public LRParser(LRParserDefinition definition, ParseNodeFactory nodeFactory)
+    public LRParser(LRParserDefinition definition, DFTNodeFactory nodeFactory)
     {
         this.definition = definition;
         this.nodeFactory = nodeFactory;
     }
     
-    public ParseNode Parse(Iterable<? extends Token> input) throws ParserException
+    public DFTNode Parse(Iterable<? extends Token> input) throws ParserException
     {
-        ParseNode result = null;
+        DFTNode result = null;
         boolean stillProcessing = true;
         Stack<LRParserStackState> parseStack = new Stack<>();
-        ParseNode nextNode = null;
+        DFTNode nextNode = null;
         LRParserAction nextAction = null;
         
         if (input == null)
@@ -99,14 +99,14 @@ public class LRParser
                 case Reduce:
                     GrammarProduction rule = nextAction.getReduceRule();
                     int childrenCount = rule.getBody().size();
-                    List<ParseNode> children = new ArrayList<>(childrenCount);
+                    List<DFTNode> children = new ArrayList<>(childrenCount);
                     for (int indexPos = 0; indexPos < childrenCount; indexPos++)
                     {
                         LRParserStackState poppedItem = parseStack.pop();
                         children.add(poppedItem.node);
                     }
                     Collections.reverse(children);
-                    ParseNode productionNode = nodeFactory.CreateInnerNode(rule, children);
+                    DFTNode productionNode = nodeFactory.CreateInnerNode(rule, children);
                     LRParserState postReduceState = parseStack.peek().state.getPostReductionState(rule.getHead());
                     LRParserStackState newReduceState = new LRParserStackState(postReduceState, productionNode);
                     if (postReduceState == null)
