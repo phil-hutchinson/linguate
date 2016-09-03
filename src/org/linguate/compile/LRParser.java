@@ -98,7 +98,7 @@ public class LRParser
                 
                 case Reduce:
                     GrammarProduction rule = nextAction.getReduceRule();
-                    int childrenCount = rule.getBody().size();
+                    int childrenCount = rule.getBodyLength();
                     List<DFTNode> children = new ArrayList<>(childrenCount);
                     for (int indexPos = 0; indexPos < childrenCount; indexPos++)
                     {
