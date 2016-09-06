@@ -4,6 +4,10 @@
  */
 package org.linguate.compile.parser;
 
+import org.linguate.compile.testimpl.basicmath.BasicMathToken;
+import org.linguate.compile.testimpl.basicmath.BasicMathDFTNode;
+import org.linguate.compile.testimpl.basicmath.BasicMathParserDefinition;
+import org.linguate.compile.testimpl.basicmath.BasicMathDFTNodeFactory;
 import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -15,7 +19,7 @@ import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 import org.linguate.compile.dft.DFTNode;
 import org.linguate.compile.ParserException;
-import static org.linguate.compile.parser.BasicMathParserDefinition.*;
+import static org.linguate.compile.testimpl.basicmath.BasicMathParserDefinition.*;
 
 /**
  *

@@ -2,13 +2,15 @@
  * This code has not bee released under any license.
  * In future, it will be released under an open-source license.
  */
-package org.linguate.compile.parser;
+package org.linguate.compile.testimpl.basicmath;
 
 import org.linguate.compile.grammar.GrammarNonTerminal;
 import org.linguate.compile.grammar.GrammarTerminal;
 import java.util.*;
 import org.linguate.compile.grammar.GrammarNonTerminal;
 import org.linguate.compile.grammar.GrammarTerminal;
+import org.linguate.compile.parser.LRParserAction;
+import org.linguate.compile.parser.LRParserState;
 
 /**
  *
