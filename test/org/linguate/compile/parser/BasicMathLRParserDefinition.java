@@ -2,10 +2,7 @@
  * This code has not bee released under any license.
  * In future, it will be released under an open-source license.
  */
-package org.linguate.compile.testimpl.basicmath;
-
-import org.linguate.compile.parser.LRParserDefinition;
-import org.linguate.compile.parser.LRParserState;
+package org.linguate.compile.parser;
 
 /**
  *
