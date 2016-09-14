@@ -22,10 +22,7 @@ public class BasicMathGrammarProduction implements GrammarProduction
     BasicMathGrammarProduction(BasicMathGrammarNonTerminal head, GrammarSymbol... body)
     {
         this.head = head;
-        for(GrammarSymbol bodyElement : body)
-        {
-            this.body.add(bodyElement);
-        }
+        this.body.addAll(Arrays.asList(body));
     }
     
     @Override
