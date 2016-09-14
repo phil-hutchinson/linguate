@@ -13,5 +13,5 @@ import java.util.Map;
  */
 public interface SyntaxDefinition
 {
-    Map<GrammarProduction, SyntaxRule> getRuleMapping();
+    Map<GrammarProduction, SyntaxRule> getRuleMap();
 }

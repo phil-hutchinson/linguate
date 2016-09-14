@@ -10,5 +10,5 @@ package org.linguate.compile.syntaxifier;
  */
 public interface SyntaxElement
 {
-    
+    String getName();    
 }

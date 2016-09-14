@@ -13,5 +13,5 @@ import java.util.List;
 public interface SyntaxRule
 {
     SyntaxRuleComponent getParentComponent();
-    List<SyntaxRuleComponent> getChildrenComponents();
+    List<? extends SyntaxRuleComponent> getChildrenComponents();
 }

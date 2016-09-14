@@ -15,4 +15,5 @@ public interface SyntaxNode
 {
     SyntaxElement getElement();
     List<? extends SyntaxNode> getChildren();
+    void setChildren(List<? extends SyntaxNode> children);
 }
