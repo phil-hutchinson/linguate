@@ -84,7 +84,9 @@ public class SyntaxifierTest
         DFTNode leafNode = syntaxifier.CreateLeafNode(numLit);
         DFTNode innerNode = syntaxifier.CreateInnerNode(REDUCE_N_TO_F, buildChildren(leafNode));
         SyntaxNode resultTree = syntaxifier.GetTree(innerNode);
-        assertEquals(resultTree.getElement().getName(), NUMERIC_LITERAL.getName());
+        String expected = NUMERIC_LITERAL.getName();
+        String actual = resultTree.getElement().getName();
+        assertEquals(expected, actual);
     }
     
     @Test
@@ -99,7 +101,9 @@ public class SyntaxifierTest
         DFTNode n3 = syntaxifier.CreateInnerNode(REDUCE_F_TO_T, buildChildren(n2));
         DFTNode n4 = syntaxifier.CreateInnerNode(REDUCE_T_TO_E, buildChildren(n3));
         SyntaxNode resultTree = syntaxifier.GetTree(n4);
-        assertEquals(resultTree.getElement().getName(), NUMERIC_LITERAL.getName());
+        String expected = NUMERIC_LITERAL.getName();
+        String actual = resultTree.getElement().getName();
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -121,7 +125,9 @@ public class SyntaxifierTest
         DFTNode termFull = syntaxifier.CreateInnerNode(REDUCE_F_TO_T, buildChildren(factorFull));
         DFTNode expressionFull = syntaxifier.CreateInnerNode(REDUCE_T_TO_E, buildChildren(termFull));
         SyntaxNode resultTree = syntaxifier.GetTree(expressionFull);
-        assertEquals(resultTree.getElement().getName(), NUMERIC_LITERAL.getName());
+        String expected = NUMERIC_LITERAL.getName();
+        String actual = resultTree.getElement().getName();
+        assertEquals(expected, actual);
     }
     
     @Test
@@ -152,27 +158,27 @@ public class SyntaxifierTest
         
         BasicMathSyntaxNode resultTree = (BasicMathSyntaxNode) syntaxifier.GetTree(expression10times7plus5);
         
-        assertEquals(resultTree.getElement().getName(), ADDITION_OPERATOR.getName());
-        assertEquals(resultTree.getChildren().size(), 2);
+        assertEquals(ADDITION_OPERATOR.getName(), resultTree.getElement().getName());
+        assertEquals(2, resultTree.getChildren().size());
         
         BasicMathSyntaxNode child0 = resultTree.getChildren().get(0);
-        assertEquals(child0.getElement().getName(), MULTIPLICATION_OPERATOR.getName());
-        assertEquals(child0.getChildren().size(), 2);
+        assertEquals(MULTIPLICATION_OPERATOR.getName(), child0.getElement().getName());
+        assertEquals(2, child0.getChildren().size());
         
         BasicMathSyntaxNode child0_0 = child0.getChildren().get(0);
-        assertEquals(child0_0.getElement().getName(), NUMERIC_LITERAL.getName());
-        assertEquals(child0_0.getValue(), 10);
-        assertEquals(child0_0.getChildren().size(), 0);
+        assertEquals(NUMERIC_LITERAL.getName(), child0_0.getElement().getName());
+        assertEquals(10, child0_0.getValue());
+        assertEquals(0, child0_0.getChildren().size());
         
         BasicMathSyntaxNode child0_1 = child0.getChildren().get(1);
-        assertEquals(child0_1.getElement().getName(), NUMERIC_LITERAL.getName());
-        assertEquals(child0_1.getValue(), 7);
-        assertEquals(child0_1.getChildren().size(), 0);
+        assertEquals(NUMERIC_LITERAL.getName(), child0_1.getElement().getName());
+        assertEquals(7, child0_1.getValue());
+        assertEquals(0, child0_1.getChildren().size());
         
         BasicMathSyntaxNode child1 = resultTree.getChildren().get(1);
-        assertEquals(child1.getElement().getName(), NUMERIC_LITERAL.getName());
-        assertEquals(child1.getValue(), 5);
-        assertEquals(child1.getChildren().size(), 0);
+        assertEquals(NUMERIC_LITERAL.getName(), child1.getElement().getName());
+        assertEquals(5, child1.getValue());
+        assertEquals(0, child1.getChildren().size());
     }
 
     @Test
@@ -202,26 +208,26 @@ public class SyntaxifierTest
         DFTNode expression8plus6times4 = syntaxifier.CreateInnerNode(REDUCE_EAT_TO_E, buildChildren(expression8, additionLeaf, term6times4));
         
         BasicMathSyntaxNode resultTree = (BasicMathSyntaxNode) syntaxifier.GetTree(expression8plus6times4);
-        assertEquals(resultTree.getElement().getName(), ADDITION_OPERATOR.getName());
-        assertEquals(resultTree.getChildren().size(), 2);
+        assertEquals(ADDITION_OPERATOR.getName(), resultTree.getElement().getName());
+        assertEquals(2, resultTree.getChildren().size());
         
         BasicMathSyntaxNode child0 = resultTree.getChildren().get(0);
-        assertEquals(child0.getElement().getName(), NUMERIC_LITERAL.getName());
-        assertEquals(child0.getValue(), 8);
-        assertEquals(child0.getChildren().size(), 0);
+        assertEquals(NUMERIC_LITERAL.getName(), child0.getElement().getName());
+        assertEquals(8, child0.getValue());
+        assertEquals(0, child0.getChildren().size());
         
         BasicMathSyntaxNode child1 = resultTree.getChildren().get(1);
-        assertEquals(child1.getElement().getName(), MULTIPLICATION_OPERATOR.getName());
-        assertEquals(child1.getChildren().size(), 2);
+        assertEquals(MULTIPLICATION_OPERATOR.getName(), child1.getElement().getName());
+        assertEquals(2, child1.getChildren().size());
 
         BasicMathSyntaxNode child1_0 = child1.getChildren().get(0);
-        assertEquals(child1_0.getElement().getName(), NUMERIC_LITERAL.getName());
-        assertEquals(child1_0.getValue(), 6);
-        assertEquals(child1_0.getChildren().size(), 0);
+        assertEquals(NUMERIC_LITERAL.getName(), child1_0.getElement().getName());
+        assertEquals(6, child1_0.getValue());
+        assertEquals(0, child1_0.getChildren().size());
         
         BasicMathSyntaxNode child1_1 = child1.getChildren().get(1);
-        assertEquals(child1_1.getElement().getName(), NUMERIC_LITERAL.getName());
-        assertEquals(child1_1.getValue(), 4);
-        assertEquals(child1_1.getChildren().size(), 0);
+        assertEquals(NUMERIC_LITERAL.getName(), child1_1.getElement().getName());
+        assertEquals(4, child1_1.getValue());
+        assertEquals(0, child1_1.getChildren().size());
     }
 }

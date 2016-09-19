@@ -18,5 +18,6 @@ public interface SyntaxRuleComponent
     
     ComponentType getComponentType();
     SyntaxElement getNewNodeElement();
-    int getExistingNodePosition();
+    int getNodePosition();
+    int getChildNodePosition();
 }

@@ -44,7 +44,7 @@ public class BasicMathSyntaxRuleComponent implements SyntaxRuleComponent
     }
 
     @Override
-    public int getExistingNodePosition()
+    public int getNodePosition()
     {
         if (componentType != ComponentType.ExistingNodeByPosition)
         {
@@ -52,6 +52,12 @@ public class BasicMathSyntaxRuleComponent implements SyntaxRuleComponent
         }
         
         return position;
+    }
+
+    @Override
+    public int getChildNodePosition()
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     
