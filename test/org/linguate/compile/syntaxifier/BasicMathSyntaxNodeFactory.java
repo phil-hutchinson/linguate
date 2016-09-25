@@ -7,7 +7,7 @@ package org.linguate.compile.syntaxifier;
 import java.util.HashMap;
 import org.linguate.compile.syntaxtree.SyntaxNode;
 import org.linguate.compile.syntaxtree.SyntaxNodeFactory;
-import org.linguate.compile.token.Token;
+import org.linguate.compile.lexeme.Lexeme;
 
 /**
  *
@@ -15,8 +15,6 @@ import org.linguate.compile.token.Token;
  */
 public class BasicMathSyntaxNodeFactory implements SyntaxNodeFactory
 {
-    private HashMap<Token, BasicMathSyntaxElement> tokenToElementMap = new HashMap<>();
-    
     @Override
     public BasicMathSyntaxNode CreateNodeForElement(SyntaxElement syntaxElement)
     {
@@ -24,21 +22,13 @@ public class BasicMathSyntaxNodeFactory implements SyntaxNodeFactory
     }
 
     @Override
-    public BasicMathSyntaxNode CreateNodeForToken(Token token)
+    public BasicMathSyntaxNode CreateNodeForLexeme(Lexeme lexeme)
     {
         BasicMathSyntaxElement element;
-        if (!tokenToElementMap.containsKey(token))
+        element = new BasicMathSyntaxElement(lexeme.getElement().getName());
+        if (lexeme.getElement() == BasicMathSyntaxDefinition.NUMERIC_LITERAL)
         {
-            element = new BasicMathSyntaxElement(token.getElement().getName());
-            tokenToElementMap.put(token, element);
-        }
-        else
-        {
-            element = tokenToElementMap.get(token);
-        }
-        if (token.getElement() == BasicMathSyntaxDefinition.NUMERIC_LITERAL)
-        {
-            int value = Integer.parseInt(token.getContents());
+            int value = Integer.parseInt(lexeme.getContents());
             return new BasicMathSyntaxNode(element, value);
         }
         else

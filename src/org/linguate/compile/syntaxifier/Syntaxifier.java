@@ -13,7 +13,7 @@ import org.linguate.compile.dft.DFTNodeFactory;
 import org.linguate.compile.grammar.GrammarProduction;
 import org.linguate.compile.syntaxtree.SyntaxNode;
 import org.linguate.compile.syntaxtree.SyntaxNodeFactory;
-import org.linguate.compile.token.Token;
+import org.linguate.compile.lexeme.Lexeme;
 
 /**
  *
@@ -89,9 +89,9 @@ public class Syntaxifier implements DFTNodeFactory
     }
 
     @Override
-    public DFTNode CreateLeafNode(Token element)
+    public DFTNode CreateLeafNode(Lexeme element)
     {
-        SyntaxNode syntaxNode = syntaxNodeFactory.CreateNodeForToken(element);
+        SyntaxNode syntaxNode = syntaxNodeFactory.CreateNodeForLexeme(element);
         return new SyntaxifierDFTNode(syntaxNode, element.getElement());
     }
     

@@ -5,18 +5,18 @@
 package org.linguate.compile.syntaxifier;
 
 import org.linguate.compile.grammar.GrammarTerminal;
-import org.linguate.compile.token.Token;
+import org.linguate.compile.lexeme.Lexeme;
 
 /**
  *
  * @author Phil Hutchinson
  */
-public class BasicMathToken implements Token
+public class BasicMathLexeme implements Lexeme
 {
     BasicMathGrammarTerminal element;
     String contents;
 
-    public BasicMathToken(BasicMathGrammarTerminal element, String contents)
+    public BasicMathLexeme(BasicMathGrammarTerminal element, String contents)
     {
         this.element = element;
         this.contents = contents;

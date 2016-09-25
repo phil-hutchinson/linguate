@@ -6,7 +6,7 @@ package org.linguate.compile.dft;
 
 import org.linguate.compile.grammar.GrammarProduction;
 import java.util.List;
-import org.linguate.compile.token.Token;
+import org.linguate.compile.lexeme.Lexeme;
 
 /**
  *
@@ -15,5 +15,5 @@ import org.linguate.compile.token.Token;
 public interface DFTNodeFactory
 {
     DFTNode CreateInnerNode(GrammarProduction production, List<DFTNode> children);
-    DFTNode CreateLeafNode(Token element);
+    DFTNode CreateLeafNode(Lexeme element);
 }

@@ -15,7 +15,7 @@ import org.linguate.compile.dft.DFTNode;
 import org.linguate.compile.dft.DFTNodeFactory;
 import org.linguate.compile.parser.LRParserAction.ActionType;
 import org.linguate.compile.ParserException;
-import org.linguate.compile.token.Token;
+import org.linguate.compile.lexeme.Lexeme;
 /**
  *
  * @author Phil Hutchinson
@@ -31,7 +31,7 @@ public class LRParser
         this.nodeFactory = nodeFactory;
     }
     
-    public DFTNode Parse(Iterable<? extends Token> input) throws ParserException
+    public DFTNode Parse(Iterable<? extends Lexeme> input) throws ParserException
     {
         DFTNode result = null;
         boolean stillProcessing = true;
@@ -44,7 +44,7 @@ public class LRParser
             return null;
         }
         
-        Iterator<? extends Token> inputIterator = input.iterator();
+        Iterator<? extends Lexeme> inputIterator = input.iterator();
         if (!inputIterator.hasNext())
         {
             return null;

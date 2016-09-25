@@ -7,8 +7,8 @@ package org.linguate.compile.parser;
 import java.util.*;
 import org.linguate.compile.dft.DFTNode;
 import org.linguate.compile.dft.DFTNodeFactory;
-import org.linguate.compile.token.Token;
 import org.linguate.compile.grammar.GrammarProduction;
+import org.linguate.compile.lexeme.Lexeme;
 
 /**
  *
@@ -54,7 +54,7 @@ public class BasicMathDFTNodeFactory implements DFTNodeFactory
     }
 
     @Override
-    public DFTNode CreateLeafNode(Token element)
+    public DFTNode CreateLeafNode(Lexeme element)
     {
         if (element.getContents() == null)
         {

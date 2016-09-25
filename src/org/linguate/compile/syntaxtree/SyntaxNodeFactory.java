@@ -5,7 +5,7 @@
 package org.linguate.compile.syntaxtree;
 
 import org.linguate.compile.syntaxifier.SyntaxElement;
-import org.linguate.compile.token.Token;
+import org.linguate.compile.lexeme.Lexeme;
 
 /**
  *
@@ -14,5 +14,5 @@ import org.linguate.compile.token.Token;
 public interface SyntaxNodeFactory
 {
     SyntaxNode CreateNodeForElement(SyntaxElement syntaxElement);
-    SyntaxNode CreateNodeForToken(Token token);
+    SyntaxNode CreateNodeForLexeme(Lexeme lexeme);
 }

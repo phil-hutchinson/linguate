@@ -77,10 +77,10 @@ public class SyntaxifierTest
     }
 
     @Test
-    public void testSyntaxify_SingleTokenBasic()
+    public void testSyntaxify_SingleLexemeBasic()
     {
         Syntaxifier syntaxifier = new Syntaxifier(basicMathSyntaxDefinition, basicMathSyntaxNodeFactory);
-        BasicMathToken numLit = new BasicMathToken(NUMERIC_LITERAL, "6");
+        BasicMathLexeme numLit = new BasicMathLexeme(NUMERIC_LITERAL, "6");
         DFTNode leafNode = syntaxifier.CreateLeafNode(numLit);
         DFTNode innerNode = syntaxifier.CreateInnerNode(REDUCE_N_TO_F, buildChildren(leafNode));
         SyntaxNode resultTree = syntaxifier.GetTree(innerNode);
@@ -90,11 +90,11 @@ public class SyntaxifierTest
     }
     
     @Test
-    public void testSyntaxify_SingleTokenFullTraversal()
+    public void testSyntaxify_SingleLexemeFullTraversal()
     {
         // expression: 12
         Syntaxifier syntaxifier = new Syntaxifier(basicMathSyntaxDefinition, basicMathSyntaxNodeFactory);
-        BasicMathToken numLit = new BasicMathToken(NUMERIC_LITERAL, "12");
+        BasicMathLexeme numLit = new BasicMathLexeme(NUMERIC_LITERAL, "12");
         
         DFTNode n1 = syntaxifier.CreateLeafNode(numLit);
         DFTNode n2 = syntaxifier.CreateInnerNode(REDUCE_N_TO_F, buildChildren(n1));
@@ -107,13 +107,13 @@ public class SyntaxifierTest
     }
 
     @Test
-    public void testSyntaxify_BracketedToken()
+    public void testSyntaxify_BracketedLexemeSequence()
     {
         // expression: ( 100 )
         Syntaxifier syntaxifier = new Syntaxifier(basicMathSyntaxDefinition, basicMathSyntaxNodeFactory);
-        BasicMathToken leftBracket = new BasicMathToken(LEFT_BRACKET, "(");
-        BasicMathToken numLit = new BasicMathToken(NUMERIC_LITERAL, "100");
-        BasicMathToken rightBracket = new BasicMathToken(RIGHT_BRACKET, ")");
+        BasicMathLexeme leftBracket = new BasicMathLexeme(LEFT_BRACKET, "(");
+        BasicMathLexeme numLit = new BasicMathLexeme(NUMERIC_LITERAL, "100");
+        BasicMathLexeme rightBracket = new BasicMathLexeme(RIGHT_BRACKET, ")");
         
         DFTNode leftBracketLeaf = syntaxifier.CreateLeafNode(leftBracket);
         DFTNode numLitLeaf = syntaxifier.CreateLeafNode(numLit);
@@ -136,11 +136,11 @@ public class SyntaxifierTest
         // expression 10 * 7 + 5
         
         Syntaxifier syntaxifier = new Syntaxifier(basicMathSyntaxDefinition, basicMathSyntaxNodeFactory);
-        BasicMathToken numLit10 = new BasicMathToken(NUMERIC_LITERAL, "10");
-        BasicMathToken multiplication = new BasicMathToken(MULTIPLICATION_OPERATOR, "*");
-        BasicMathToken numLit7 = new BasicMathToken(NUMERIC_LITERAL, "7");
-        BasicMathToken addition = new BasicMathToken(ADDITION_OPERATOR, "+");
-        BasicMathToken numLit5 = new BasicMathToken(NUMERIC_LITERAL, "5");
+        BasicMathLexeme numLit10 = new BasicMathLexeme(NUMERIC_LITERAL, "10");
+        BasicMathLexeme multiplication = new BasicMathLexeme(MULTIPLICATION_OPERATOR, "*");
+        BasicMathLexeme numLit7 = new BasicMathLexeme(NUMERIC_LITERAL, "7");
+        BasicMathLexeme addition = new BasicMathLexeme(ADDITION_OPERATOR, "+");
+        BasicMathLexeme numLit5 = new BasicMathLexeme(NUMERIC_LITERAL, "5");
         
         DFTNode numLit10Leaf = syntaxifier.CreateLeafNode(numLit10);
         DFTNode factor10 = syntaxifier.CreateInnerNode(REDUCE_N_TO_F, buildChildren(numLit10Leaf));
@@ -187,11 +187,11 @@ public class SyntaxifierTest
         // expression 8 + 6 * 4
         
         Syntaxifier syntaxifier = new Syntaxifier(basicMathSyntaxDefinition, basicMathSyntaxNodeFactory);
-        BasicMathToken numLit8 = new BasicMathToken(NUMERIC_LITERAL, "8");
-        BasicMathToken addition = new BasicMathToken(ADDITION_OPERATOR, "+");
-        BasicMathToken numLit6 = new BasicMathToken(NUMERIC_LITERAL, "6");
-        BasicMathToken multiplication = new BasicMathToken(MULTIPLICATION_OPERATOR, "*");
-        BasicMathToken numLit4 = new BasicMathToken(NUMERIC_LITERAL, "4");
+        BasicMathLexeme numLit8 = new BasicMathLexeme(NUMERIC_LITERAL, "8");
+        BasicMathLexeme addition = new BasicMathLexeme(ADDITION_OPERATOR, "+");
+        BasicMathLexeme numLit6 = new BasicMathLexeme(NUMERIC_LITERAL, "6");
+        BasicMathLexeme multiplication = new BasicMathLexeme(MULTIPLICATION_OPERATOR, "*");
+        BasicMathLexeme numLit4 = new BasicMathLexeme(NUMERIC_LITERAL, "4");
         
         DFTNode numLit8Leaf = syntaxifier.CreateLeafNode(numLit8);
         DFTNode factor8 = syntaxifier.CreateInnerNode(REDUCE_N_TO_F, buildChildren(numLit8Leaf));
