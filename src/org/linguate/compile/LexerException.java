@@ -8,7 +8,7 @@ package org.linguate.compile;
  *
  * @author Phil Hutchinson
  */
-public class LexerException extends Exception
+public class LexerException extends RuntimeException
 {
     public LexerException(String message)
     {

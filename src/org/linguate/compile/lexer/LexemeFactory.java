@@ -4,15 +4,14 @@
  */
 package org.linguate.compile.lexer;
 
-import java.io.Reader;
+import org.linguate.compile.grammar.GrammarTerminal;
 import org.linguate.compile.token.Token;
 
 /**
  *
  * @author Phil Hutchinson
  */
-public interface Lexer
+public interface LexemeFactory
 {
-    void setLexemeFactory(LexemeFactory lexemeFactory);
-    Iterable<? extends Token> lex(String source);
+        Token CreateLexeme(GrammarTerminal terminal, String contents);
 }

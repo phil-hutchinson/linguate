@@ -14,7 +14,7 @@ import org.linguate.compile.token.Token;
  *
  * @author Phil Hutchinson
  */
-public class DefaultLexerWrappers
+public class DFALexerWrappers
 {
     public static class GrammarTerminalWrapper implements GrammarTerminal
     {
@@ -33,7 +33,7 @@ public class DefaultLexerWrappers
         
     }
     
-    public static class LexerDefinitionWrapper implements LexerDefinition
+    public static class LexerDefinitionWrapper implements DFALexerDefinition
     {
 
         @Override
@@ -134,13 +134,13 @@ public class DefaultLexerWrappers
                     
                 // state 9 - saw ==
                 case 9:
-                    if (character == '=')
+                    if (character == ';')
                     {
                         return 10;
                     }
                     break;
                     
-                // state 10 - saw ===
+                // state 10 - saw ==;
                 case 10:
                     if (character == '=')
                     {
@@ -148,7 +148,7 @@ public class DefaultLexerWrappers
                     }
                     break;
                     
-                // state 11 - saw ====
+                // state 11 - saw ==;=
                 case 11:
                     if (character == '=')
                     {
@@ -156,7 +156,7 @@ public class DefaultLexerWrappers
                     }
                     break;
                     
-                // state 12 - saw =====
+                // state 12 - saw ==;==
                     
                 // state 13 - in white space
                 case 13:
@@ -202,7 +202,7 @@ public class DefaultLexerWrappers
                     return ASSIGNMENT_OPERATOR;
                     
                 case 12:
-                    return FIVE_EQUALS_OPERATOR;
+                    return SPECIAL_OPERATOR;
                     
                 case 13:
                     return WHITE_SPACE;
@@ -219,7 +219,7 @@ public class DefaultLexerWrappers
         {
             GrammarTerminal terminals[] = { IDENTIFIER, INTEGER_LITERAL, FLOAT_LITERAL, ASSIGNMENT_OPERATOR,
                     ADDITION_OPERATOR, INCREMENT_OPERATOR, ADDITION_ASSIGNMENT_OPERATOR,
-                    FIVE_EQUALS_OPERATOR, WHITE_SPACE, SEMICOLON};
+                    SPECIAL_OPERATOR, WHITE_SPACE, SEMICOLON};
             return new HashSet<GrammarTerminal>(Arrays.asList(terminals));
         }
         
@@ -249,6 +249,17 @@ public class DefaultLexerWrappers
         }
     }
     
+    public static class LexemeFactoryWrapper implements LexemeFactory
+    {
+
+        @Override
+        public Token CreateLexeme(GrammarTerminal terminal, String contents)
+        {
+            return new TokenWrapper(terminal, contents);
+        }
+        
+    }
+    
     public static final GrammarTerminal IDENTIFIER = new GrammarTerminalWrapper("IDENTIFIER"); // [Alpha]([Alpha]|[Digit])*
     public static final GrammarTerminal INTEGER_LITERAL = new GrammarTerminalWrapper("INT_LIT"); // [Digit]+
     public static final GrammarTerminal FLOAT_LITERAL = new GrammarTerminalWrapper("FLOAT_LIT"); // [Digit]+[Period][Digit]+
@@ -256,7 +267,7 @@ public class DefaultLexerWrappers
     public static final GrammarTerminal ADDITION_OPERATOR = new GrammarTerminalWrapper("ADD_OP"); // "+"
     public static final GrammarTerminal INCREMENT_OPERATOR = new GrammarTerminalWrapper("INCR_OP"); // "++"
     public static final GrammarTerminal ADDITION_ASSIGNMENT_OPERATOR = new GrammarTerminalWrapper("ADDASSIGN_OP"); // "+="
-    public static final GrammarTerminal FIVE_EQUALS_OPERATOR = new GrammarTerminalWrapper("FIVEEQUALS_OP"); // "=====" (unusual operator used to test lexer rewind.)
+    public static final GrammarTerminal SPECIAL_OPERATOR = new GrammarTerminalWrapper("SPECIAL_OP"); // "==;==" (unusual operator used to test lexer rewind.)
     public static final GrammarTerminal WHITE_SPACE = new GrammarTerminalWrapper("WHITE_SPACE"); // {WhiteSpace]+
     public static final GrammarTerminal SEMICOLON = new GrammarTerminalWrapper("STATEMENT_TERMINATOR"); // ";"
     

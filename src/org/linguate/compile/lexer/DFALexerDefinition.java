@@ -11,7 +11,7 @@ import org.linguate.compile.grammar.GrammarTerminal;
  *
  * @author Phil Hutchinson
  */
-public interface  LexerDefinition
+public interface  DFALexerDefinition
 {
     final int DEAD_STATE = -1;
     int getNextState(int currentState, char character);

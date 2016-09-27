@@ -16,27 +16,29 @@ import static org.junit.Assert.*;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 import org.linguate.compile.LexerException;
-import static org.linguate.compile.lexer.DefaultLexerWrappers.*;
-import org.linguate.compile.lexer.DefaultLexerWrappers.TokenWrapper;
+import static org.linguate.compile.lexer.DFALexerWrappers.*;
+import org.linguate.compile.lexer.DFALexerWrappers.TokenWrapper;
 import org.linguate.compile.token.Token;
 
 /**
  *
  * @author Phil Hutchinson
  */
-public class DefaultLexerTest
+public class DFALexerTest
 {
     protected Lexer instance;
-    protected static LexerDefinition definition;
+    protected static DFALexerDefinition definition;
+    protected static LexemeFactory lexemeFactory;
     
-    public DefaultLexerTest()
+    public DFALexerTest()
     {
     }
     
     @BeforeClass
     public static void setUpClass()
     {
-        definition = new DefaultLexerWrappers.LexerDefinitionWrapper();
+        definition = new DFALexerWrappers.LexerDefinitionWrapper();
+        lexemeFactory = new LexemeFactoryWrapper();
     }
     
     @AfterClass
@@ -47,7 +49,7 @@ public class DefaultLexerTest
     @Before
     public void setUp()
     {
-        instance = new DefaultLexer();
+        instance = new DFALexer(definition);
     }
     
     @After
@@ -58,39 +60,38 @@ public class DefaultLexerTest
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
-    @Test
-    public void setLexerDefinition_null_throws()
+    @Test 
+    public void constructor_nullDefinition_throws()
     {
         expectedException.expect(NullPointerException.class);
-        instance.setLexerDefinition(null);
+    }
+   
+    @Test
+    public void setLexemeFactory_null_throws()
+    {
+        expectedException.expect(NullPointerException.class);
+        instance.setLexemeFactory(null);
     }
 
     @Test
-    public void setLexerDefinition_notNull()
+    public void setLexemeFactory_callTwice_throws()
     {
-        instance.setLexerDefinition(definition);
-        // can only test successful creation i.e. no exception thrown.
-    }
-    
-    @Test
-    public void setLexerDefinition_callTwice_throws()
-    {
-        instance.setLexerDefinition(definition);
+        instance.setLexemeFactory(lexemeFactory);
         expectedException.expect(IllegalStateException.class);
-        instance.setLexerDefinition(definition);
+        instance.setLexemeFactory(lexemeFactory);
     }
     
     @Test 
-    public void lex_callBeforeSetDefinition_throws()
+    public void lex_callBeforeSetFactory_throws()
     {
         expectedException.expect(IllegalStateException.class);
-        instance.lex(new ArrayList<Character>());
+        instance.lex("");
     }
 
     @Test
     public void lex_nullDefinition_throws()
     {
-        instance.setLexerDefinition(definition);
+        instance.setLexemeFactory(lexemeFactory);
         expectedException.expect(NullPointerException.class);
         instance.lex(null);
     }
@@ -98,11 +99,10 @@ public class DefaultLexerTest
     @Test
     public void lex_emptyInput()
     {
-        ArrayList<Character> source = new ArrayList<Character>();
         List<Token> expected = new ArrayList<Token>();
 
-        instance.setLexerDefinition(definition);
-        Iterable<Token> actual = (Iterable<Token>) instance.lex(source);
+        instance.setLexemeFactory(lexemeFactory);
+        Iterable<Token> actual = (Iterable<Token>) instance.lex("");
 
         checkLexOutput(expected, actual);
     }
@@ -110,25 +110,24 @@ public class DefaultLexerTest
     @Test
     public void lex_validSingleCharInput()
     {
-        ArrayList<Character> source = new ArrayList<Character>();
-        source.add('a');
+        String source = "a";
         List<Token> expected = new ArrayList<Token>();
         expected.add(new TokenWrapper(IDENTIFIER, "a"));
 
-        instance.setLexerDefinition(definition);
+        instance.setLexemeFactory(lexemeFactory);
         Iterable<Token> actual = (Iterable<Token>) instance.lex(source);
 
         checkLexOutput(expected, actual);
     }
-    
+
     @Test
     public void lex_validSingleTokenInput()
     {
-        ArrayList<Character> source = buildLexInput("12354");
+        String source = "12354";
         List<Token> expected = new ArrayList<Token>();
         expected.add(new TokenWrapper(INTEGER_LITERAL, "12354"));
 
-        instance.setLexerDefinition(definition);
+        instance.setLexemeFactory(lexemeFactory);
         Iterable<Token> actual = (Iterable<Token>) instance.lex(source);
 
         checkLexOutput(expected, actual);
@@ -137,11 +136,11 @@ public class DefaultLexerTest
     @Test
     public void lex_validInputTakesLongestMatch()
     {
-        ArrayList<Character> source = buildLexInput("12354.343");
+        String source = "12354.343";
         List<Token> expected = new ArrayList<Token>();
         expected.add(new TokenWrapper(FLOAT_LITERAL, "12354.343"));
 
-        instance.setLexerDefinition(definition);
+        instance.setLexemeFactory(lexemeFactory);
         Iterable<Token> actual = (Iterable<Token>) instance.lex(source);
 
         checkLexOutput(expected, actual);
@@ -150,7 +149,7 @@ public class DefaultLexerTest
     @Test
     public void lex_validMultiTokenInput()
     {
-        ArrayList<Character> source = buildLexInput("555+abc += ab343");
+        String source = "555+abc += ab343";
         List<Token> expected = new ArrayList<Token>();
         expected.add(new TokenWrapper(INTEGER_LITERAL, "555"));
         expected.add(new TokenWrapper(ADDITION_OPERATOR, "+"));
@@ -159,7 +158,7 @@ public class DefaultLexerTest
         expected.add(new TokenWrapper(ADDITION_ASSIGNMENT_OPERATOR, "+="));
         expected.add(new TokenWrapper(IDENTIFIER, "ab343"));
 
-        instance.setLexerDefinition(definition);
+        instance.setLexemeFactory(lexemeFactory);
         Iterable<Token> actual = (Iterable<Token>) instance.lex(source);
 
         checkLexOutput(expected, actual);
@@ -168,16 +167,16 @@ public class DefaultLexerTest
     @Test
     public void lex_validInputRequiresRewind()
     {
-        ArrayList<Character> source = buildLexInput("===== ====");
+        String source = "===== ====";
         List<Token> expected = new ArrayList<Token>();
-        expected.add(new TokenWrapper(FIVE_EQUALS_OPERATOR, "====="));
+        expected.add(new TokenWrapper(SPECIAL_OPERATOR, "==;=="));
         expected.add(new TokenWrapper(WHITE_SPACE, " "));
         expected.add(new TokenWrapper(ASSIGNMENT_OPERATOR, "="));
         expected.add(new TokenWrapper(ASSIGNMENT_OPERATOR, "="));
-        expected.add(new TokenWrapper(ASSIGNMENT_OPERATOR, "="));
+        expected.add(new TokenWrapper(SEMICOLON, ";"));
         expected.add(new TokenWrapper(ASSIGNMENT_OPERATOR, "="));
 
-        instance.setLexerDefinition(definition);
+        instance.setLexemeFactory(lexemeFactory);
         Iterable<Token> actual = (Iterable<Token>) instance.lex(source);
 
         checkLexOutput(expected, actual);
@@ -186,23 +185,11 @@ public class DefaultLexerTest
     @Test
     public void lex_invalidInput_throws()
     {
-        ArrayList<Character> source = buildLexInput("abc<>");
+        String source = "abc<>";
 
-        instance.setLexerDefinition(definition);
+        instance.setLexemeFactory(lexemeFactory);
         expectedException.expect(LexerException.class);
         instance.lex(source);
-    }
-    
-    public ArrayList<Character> buildLexInput(String str)
-    {
-        ArrayList<Character> result = new ArrayList<>();
-        for(int strPos = 0; strPos < str.length(); strPos++)
-        {
-            char charAtPos = str.charAt(strPos);
-            Character charObj = new Character(charAtPos);
-            result.add(charObj);
-        }
-        return result;
     }
     
     public void checkLexOutput(Iterable<Token> expected, Iterable<Token> actual)
