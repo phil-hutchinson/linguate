@@ -14,5 +14,5 @@ import org.linguate.compile.token.Token;
 public interface Lexer
 {
     void setLexerDefinition(LexerDefinition lexerDefinition);
-    Iterable<? extends Token> lex(Reader inputReader);
+    Iterable<? extends Token> lex(Iterable<Character> source);
 }
