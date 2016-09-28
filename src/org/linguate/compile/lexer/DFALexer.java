@@ -61,7 +61,7 @@ public class DFALexer implements Lexer
     @Override
     public Iterable<? extends Token> lex(String source)
     {
-        if (definition == null)
+        if (lexemeFactory == null)
         {
             throw new IllegalStateException("Lexer Definition must be set before calling lex()");
         }

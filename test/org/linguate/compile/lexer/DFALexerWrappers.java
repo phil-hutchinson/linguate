@@ -182,7 +182,7 @@ public class DFALexerWrappers
                 case 2:
                     return INTEGER_LITERAL;
                     
-                case 3:
+                case 4:
                     return FLOAT_LITERAL;
                     
                 case 5:
