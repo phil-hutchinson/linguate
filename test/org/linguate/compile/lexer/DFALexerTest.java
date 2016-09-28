@@ -64,6 +64,7 @@ public class DFALexerTest
     public void constructor_nullDefinition_throws()
     {
         expectedException.expect(NullPointerException.class);
+        new DFALexer(null);
     }
    
     @Test
@@ -156,6 +157,7 @@ public class DFALexerTest
         expected.add(new TokenWrapper(IDENTIFIER, "abc"));
         expected.add(new TokenWrapper(WHITE_SPACE, " "));
         expected.add(new TokenWrapper(ADDITION_ASSIGNMENT_OPERATOR, "+="));
+        expected.add(new TokenWrapper(WHITE_SPACE, " "));
         expected.add(new TokenWrapper(IDENTIFIER, "ab343"));
 
         instance.setLexemeFactory(lexemeFactory);
@@ -167,7 +169,7 @@ public class DFALexerTest
     @Test
     public void lex_validInputRequiresRewind()
     {
-        String source = "===== ====";
+        String source = "==;== ==;=";
         List<Token> expected = new ArrayList<Token>();
         expected.add(new TokenWrapper(SPECIAL_OPERATOR, "==;=="));
         expected.add(new TokenWrapper(WHITE_SPACE, " "));
@@ -202,9 +204,9 @@ public class DFALexerTest
         {
             Token eToken = eIterator.next();
             Token aToken = aIterator.next();
-            String unmatchedElements = String.format("Element %1$d does not match on element, expected: %2s actual %3s", pos, eToken.getElement().getName(), aToken.getElement().getName());
+            String unmatchedElements = String.format("Element %1$d does not match on element, expected: %2$s actual %3$s", pos, eToken.getElement().getName(), aToken.getElement().getName());
             assertEquals(unmatchedElements, eToken.getElement(), aToken.getElement());
-            String unmatchedContents = String.format("Element %1$d does not match on contents, expected: %2s actual %3s", pos, eToken.getContents(), aToken.getContents());
+            String unmatchedContents = String.format("Element %1$d does not match on contents, expected %2$s actual %3$s", pos, eToken.getContents(), aToken.getContents());
             assertEquals(unmatchedContents, eToken.getContents(), aToken.getContents());
             pos++;
         }
