@@ -5,7 +5,7 @@
 package org.linguate.compile.lexer;
 
 import java.io.Reader;
-import org.linguate.compile.token.Token;
+import org.linguate.compile.lexeme.Lexeme;
 
 /**
  *
@@ -14,5 +14,5 @@ import org.linguate.compile.token.Token;
 public interface Lexer
 {
     void setLexemeFactory(LexemeFactory lexemeFactory);
-    Iterable<? extends Token> lex(String source);
+    Iterable<? extends Lexeme> lex(String source);
 }

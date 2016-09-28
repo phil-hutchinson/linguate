@@ -5,7 +5,7 @@
 package org.linguate.compile.lexer;
 
 import org.linguate.compile.grammar.GrammarTerminal;
-import org.linguate.compile.token.Token;
+import org.linguate.compile.lexeme.Lexeme;
 
 /**
  *
@@ -13,5 +13,5 @@ import org.linguate.compile.token.Token;
  */
 public interface LexemeFactory
 {
-        Token CreateLexeme(GrammarTerminal terminal, String contents);
+        Lexeme CreateLexeme(GrammarTerminal terminal, String contents);
 }

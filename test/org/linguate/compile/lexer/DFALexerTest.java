@@ -17,8 +17,8 @@ import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 import org.linguate.compile.LexerException;
 import static org.linguate.compile.lexer.DFALexerWrappers.*;
-import org.linguate.compile.lexer.DFALexerWrappers.TokenWrapper;
-import org.linguate.compile.token.Token;
+import org.linguate.compile.lexer.DFALexerWrappers.LexemeWrapper;
+import org.linguate.compile.lexeme.Lexeme;
 
 /**
  *
@@ -100,10 +100,10 @@ public class DFALexerTest
     @Test
     public void lex_emptyInput()
     {
-        List<Token> expected = new ArrayList<Token>();
+        List<Lexeme> expected = new ArrayList<Lexeme>();
 
         instance.setLexemeFactory(lexemeFactory);
-        Iterable<Token> actual = (Iterable<Token>) instance.lex("");
+        Iterable<Lexeme> actual = (Iterable<Lexeme>) instance.lex("");
 
         checkLexOutput(expected, actual);
     }
@@ -112,24 +112,24 @@ public class DFALexerTest
     public void lex_validSingleCharInput()
     {
         String source = "a";
-        List<Token> expected = new ArrayList<Token>();
-        expected.add(new TokenWrapper(IDENTIFIER, "a"));
+        List<Lexeme> expected = new ArrayList<Lexeme>();
+        expected.add(new LexemeWrapper(IDENTIFIER, "a"));
 
         instance.setLexemeFactory(lexemeFactory);
-        Iterable<Token> actual = (Iterable<Token>) instance.lex(source);
+        Iterable<Lexeme> actual = (Iterable<Lexeme>) instance.lex(source);
 
         checkLexOutput(expected, actual);
     }
 
     @Test
-    public void lex_validSingleTokenInput()
+    public void lex_validSingleLexemeInput()
     {
         String source = "12354";
-        List<Token> expected = new ArrayList<Token>();
-        expected.add(new TokenWrapper(INTEGER_LITERAL, "12354"));
+        List<Lexeme> expected = new ArrayList<Lexeme>();
+        expected.add(new LexemeWrapper(INTEGER_LITERAL, "12354"));
 
         instance.setLexemeFactory(lexemeFactory);
-        Iterable<Token> actual = (Iterable<Token>) instance.lex(source);
+        Iterable<Lexeme> actual = (Iterable<Lexeme>) instance.lex(source);
 
         checkLexOutput(expected, actual);
     }
@@ -138,30 +138,30 @@ public class DFALexerTest
     public void lex_validInputTakesLongestMatch()
     {
         String source = "12354.343";
-        List<Token> expected = new ArrayList<Token>();
-        expected.add(new TokenWrapper(FLOAT_LITERAL, "12354.343"));
+        List<Lexeme> expected = new ArrayList<Lexeme>();
+        expected.add(new LexemeWrapper(FLOAT_LITERAL, "12354.343"));
 
         instance.setLexemeFactory(lexemeFactory);
-        Iterable<Token> actual = (Iterable<Token>) instance.lex(source);
+        Iterable<Lexeme> actual = (Iterable<Lexeme>) instance.lex(source);
 
         checkLexOutput(expected, actual);
     }
     
     @Test
-    public void lex_validMultiTokenInput()
+    public void lex_validMultiLexemeInput()
     {
         String source = "555+abc += ab343";
-        List<Token> expected = new ArrayList<Token>();
-        expected.add(new TokenWrapper(INTEGER_LITERAL, "555"));
-        expected.add(new TokenWrapper(ADDITION_OPERATOR, "+"));
-        expected.add(new TokenWrapper(IDENTIFIER, "abc"));
-        expected.add(new TokenWrapper(WHITE_SPACE, " "));
-        expected.add(new TokenWrapper(ADDITION_ASSIGNMENT_OPERATOR, "+="));
-        expected.add(new TokenWrapper(WHITE_SPACE, " "));
-        expected.add(new TokenWrapper(IDENTIFIER, "ab343"));
+        List<Lexeme> expected = new ArrayList<Lexeme>();
+        expected.add(new LexemeWrapper(INTEGER_LITERAL, "555"));
+        expected.add(new LexemeWrapper(ADDITION_OPERATOR, "+"));
+        expected.add(new LexemeWrapper(IDENTIFIER, "abc"));
+        expected.add(new LexemeWrapper(WHITE_SPACE, " "));
+        expected.add(new LexemeWrapper(ADDITION_ASSIGNMENT_OPERATOR, "+="));
+        expected.add(new LexemeWrapper(WHITE_SPACE, " "));
+        expected.add(new LexemeWrapper(IDENTIFIER, "ab343"));
 
         instance.setLexemeFactory(lexemeFactory);
-        Iterable<Token> actual = (Iterable<Token>) instance.lex(source);
+        Iterable<Lexeme> actual = (Iterable<Lexeme>) instance.lex(source);
 
         checkLexOutput(expected, actual);
     }
@@ -170,16 +170,16 @@ public class DFALexerTest
     public void lex_validInputRequiresRewind()
     {
         String source = "==;== ==;=";
-        List<Token> expected = new ArrayList<Token>();
-        expected.add(new TokenWrapper(SPECIAL_OPERATOR, "==;=="));
-        expected.add(new TokenWrapper(WHITE_SPACE, " "));
-        expected.add(new TokenWrapper(ASSIGNMENT_OPERATOR, "="));
-        expected.add(new TokenWrapper(ASSIGNMENT_OPERATOR, "="));
-        expected.add(new TokenWrapper(SEMICOLON, ";"));
-        expected.add(new TokenWrapper(ASSIGNMENT_OPERATOR, "="));
+        List<Lexeme> expected = new ArrayList<Lexeme>();
+        expected.add(new LexemeWrapper(SPECIAL_OPERATOR, "==;=="));
+        expected.add(new LexemeWrapper(WHITE_SPACE, " "));
+        expected.add(new LexemeWrapper(ASSIGNMENT_OPERATOR, "="));
+        expected.add(new LexemeWrapper(ASSIGNMENT_OPERATOR, "="));
+        expected.add(new LexemeWrapper(SEMICOLON, ";"));
+        expected.add(new LexemeWrapper(ASSIGNMENT_OPERATOR, "="));
 
         instance.setLexemeFactory(lexemeFactory);
-        Iterable<Token> actual = (Iterable<Token>) instance.lex(source);
+        Iterable<Lexeme> actual = (Iterable<Lexeme>) instance.lex(source);
 
         checkLexOutput(expected, actual);
     }
@@ -194,20 +194,20 @@ public class DFALexerTest
         instance.lex(source);
     }
     
-    public void checkLexOutput(Iterable<Token> expected, Iterable<Token> actual)
+    public void checkLexOutput(Iterable<Lexeme> expected, Iterable<Lexeme> actual)
     {
-        Iterator<Token> eIterator = expected.iterator();
-        Iterator<Token> aIterator = actual.iterator();
+        Iterator<Lexeme> eIterator = expected.iterator();
+        Iterator<Lexeme> aIterator = actual.iterator();
         
         int pos = 0;
         while(eIterator.hasNext() && aIterator.hasNext())
         {
-            Token eToken = eIterator.next();
-            Token aToken = aIterator.next();
-            String unmatchedElements = String.format("Element %1$d does not match on element, expected: %2$s actual %3$s", pos, eToken.getElement().getName(), aToken.getElement().getName());
-            assertEquals(unmatchedElements, eToken.getElement(), aToken.getElement());
-            String unmatchedContents = String.format("Element %1$d does not match on contents, expected %2$s actual %3$s", pos, eToken.getContents(), aToken.getContents());
-            assertEquals(unmatchedContents, eToken.getContents(), aToken.getContents());
+            Lexeme eLexeme = eIterator.next();
+            Lexeme aLexeme = aIterator.next();
+            String unmatchedElements = String.format("Element %1$d does not match on element, expected: %2$s actual %3$s", pos, eLexeme.getElement().getName(), aLexeme.getElement().getName());
+            assertEquals(unmatchedElements, eLexeme.getElement(), aLexeme.getElement());
+            String unmatchedContents = String.format("Element %1$d does not match on contents, expected %2$s actual %3$s", pos, eLexeme.getContents(), aLexeme.getContents());
+            assertEquals(unmatchedContents, eLexeme.getContents(), aLexeme.getContents());
             pos++;
         }
         

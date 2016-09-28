@@ -13,7 +13,7 @@ import java.util.Stack;
 import org.linguate.compile.LexerException;
 import org.linguate.compile.grammar.GrammarTerminal;
 import static org.linguate.compile.lexer.DFALexerDefinition.DEAD_STATE;
-import org.linguate.compile.token.Token;
+import org.linguate.compile.lexeme.Lexeme;
 
 /**
  *
@@ -59,7 +59,7 @@ public class DFALexer implements Lexer
     }
 
     @Override
-    public Iterable<? extends Token> lex(String source)
+    public Iterable<? extends Lexeme> lex(String source)
     {
         if (lexemeFactory == null)
         {
@@ -73,9 +73,9 @@ public class DFALexer implements Lexer
         return lex(new StringSourceReader(source));
     }
     
-    protected Iterable<? extends Token> lex(SourceReader sourceReader)
+    protected Iterable<? extends Lexeme> lex(SourceReader sourceReader)
     {
-        ArrayList<Token> result = new ArrayList<Token>();
+        ArrayList<Lexeme> result = new ArrayList<Lexeme>();
         
         int currSequenceOffset = 0;
         int nextCharOffset = 0;
@@ -114,7 +114,7 @@ public class DFALexer implements Lexer
             {
                 if (longestAcceptTerminal == null)
                 {
-                    throw new LexerException("Encountered input with no matching token.");
+                    throw new LexerException("Encountered input with no matching lexeme.");
                 }
                 else
                 {

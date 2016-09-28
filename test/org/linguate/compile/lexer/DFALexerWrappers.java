@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import org.linguate.compile.grammar.GrammarTerminal;
-import org.linguate.compile.token.Token;
+import org.linguate.compile.lexeme.Lexeme;
 
 /**
  *
@@ -45,7 +45,7 @@ public class DFALexerWrappers
             // but test cases will be restricted to normal spaces.
             switch(currentState)
             {
-                // state 0 - beginning new token (start state)
+                // state 0 - beginning new lexeme (start state)
                 case 0:
                     if(Character.isLetter(character))
                     {
@@ -225,12 +225,12 @@ public class DFALexerWrappers
         
     }
 
-    public static class TokenWrapper implements Token
+    public static class LexemeWrapper implements Lexeme
     {
         GrammarTerminal element;
         String contents;
 
-        public TokenWrapper(GrammarTerminal element, String contents)
+        public LexemeWrapper(GrammarTerminal element, String contents)
         {
             this.element = element;
             this.contents = contents;
@@ -253,9 +253,9 @@ public class DFALexerWrappers
     {
 
         @Override
-        public Token CreateLexeme(GrammarTerminal terminal, String contents)
+        public Lexeme CreateLexeme(GrammarTerminal terminal, String contents)
         {
-            return new TokenWrapper(terminal, contents);
+            return new LexemeWrapper(terminal, contents);
         }
         
     }
