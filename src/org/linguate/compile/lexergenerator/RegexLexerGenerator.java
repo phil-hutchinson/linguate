@@ -11,5 +11,5 @@ import org.linguate.compile.lexer.DFALexerDefinition;
  * @author phil
  */
 public interface RegexLexerGenerator {
-    DFALexerDefinition generate(RegexNode rootNode);
+    DFALexerDefinition generate(RegexNode rootNode, TerminalPrioritizer terminalPrioritizer);
 }
