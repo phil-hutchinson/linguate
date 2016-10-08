@@ -44,7 +44,7 @@ public class DefaultRegexLexerGeneratorWrappers {
         {
             this.nodeType = nodeType;
             this.accepts = accepts;
-            if (characterSet == null)
+            if (characterSet == null || characterSet.length() == 0)
             {
                 this.characterSet = null;
             }
@@ -55,6 +55,12 @@ public class DefaultRegexLexerGeneratorWrappers {
                 {
                     this.characterSet.add(characterSet.charAt(charPos));
                 }
+            }
+            
+            this.children = new ArrayList<RegexNode>();
+            if (children != null)
+            {
+                this.children.addAll(Arrays.asList(children));
             }
         }
         
@@ -83,7 +89,7 @@ public class DefaultRegexLexerGeneratorWrappers {
             {
                 throw new RuntimeException("null children not allowed");
             }
-            return new RegexNodeWrapper(CAT_NODE, null, "", child);
+            return new RegexNodeWrapper(STAR_NODE, null, "", child);
         }
                 
         public static RegexNodeWrapper CreateOrNode(RegexNodeWrapper... children )

@@ -154,9 +154,9 @@ public class DefaultRegexLexerGeneratorTest
         // regex string: "a*"
         GrammarTerminalWrapper terminal = new GrammarTerminalWrapper("SampleTerminal");
         RegexNodeWrapper aLeaf = RegexNodeWrapper.CreateRegularLeaf("a");
-        RegexNodeWrapper abNode = RegexNodeWrapper.CreateStarNode(aLeaf);
+        RegexNodeWrapper aStarNode = RegexNodeWrapper.CreateStarNode(aLeaf);
         RegexNodeWrapper acceptLeaf = RegexNodeWrapper.CreateAcceptLeaf(terminal);
-        RegexNodeWrapper rootNode = RegexNodeWrapper.CreateCatNode(abNode, acceptLeaf);
+        RegexNodeWrapper rootNode = RegexNodeWrapper.CreateCatNode(aStarNode, acceptLeaf);
         
         Map<String, GrammarTerminal> testCases = new HashMap<String, GrammarTerminal>();
         testCases.put("a", terminal);
@@ -343,7 +343,7 @@ public class DefaultRegexLexerGeneratorTest
                     ? definition.accepts(currState)
                     : null;
             
-            String assertMsg = String.format("Unmatched input: %1$", testInput.getKey());
+            String assertMsg = String.format("Unmatched input: %1$s", testInput.getKey());
             assertEquals(assertMsg, expectedResult, actualResult);
         }
     }
