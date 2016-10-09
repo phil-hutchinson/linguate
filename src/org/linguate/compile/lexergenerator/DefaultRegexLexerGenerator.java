@@ -41,6 +41,9 @@ public class DefaultRegexLexerGenerator implements RegexLexerGenerator
         if (terminalPrioritizer == null) {
             throw new NullPointerException("Terminal prioritizer cannot be set to null.");
         }
+        if (builder == null) {
+            throw new NullPointerException("Builder cannot be set to null.");
+        }
         
         this.rootNode = rootNode;
         this.terminalPrioritizer = terminalPrioritizer;

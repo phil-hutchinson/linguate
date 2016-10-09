@@ -79,6 +79,17 @@ public class DefaultRegexLexerGeneratorTest
         instance.generate(rootNode, null, builder);
     }
     
+    @Test
+    public void generate_nullBuilder_throws()
+    {
+        expectedException.expect(NullPointerException.class);
+        GrammarTerminalWrapper terminal = new GrammarTerminalWrapper("SampleTerminal");
+        RegexNodeWrapper mainLeaf = RegexNodeWrapper.CreateRegularLeaf("a");
+        RegexNodeWrapper acceptLeaf = RegexNodeWrapper.CreateAcceptLeaf(terminal);
+        RegexNodeWrapper rootNode = RegexNodeWrapper.CreateCatNode(mainLeaf, acceptLeaf);
+        TerminalPrioritizer prioritizer = new TerminalPrioritizerWrapper(new ArrayList<GrammarTerminal>());
+        instance.generate(rootNode, prioritizer, null);
+    }
     
     @Test
     public void generate_simpleExpression()
