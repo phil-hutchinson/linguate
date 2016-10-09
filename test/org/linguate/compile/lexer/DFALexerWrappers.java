@@ -222,6 +222,16 @@ public class DFALexerWrappers
                     SPECIAL_OPERATOR, WHITE_SPACE, SEMICOLON};
             return new HashSet<GrammarTerminal>(Arrays.asList(terminals));
         }
+
+        @Override
+        public int getCharacterCongruency(char character) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public int getNextState(int currentState, int characterCongruency) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
         
     }
 

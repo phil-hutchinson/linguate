@@ -52,6 +52,16 @@ class BuildableDFALexerDefinition implements DFALexerDefinition {
     public Set<GrammarTerminal> getAllAcceptTerminals() {
         return new HashSet<GrammarTerminal>(acceptStates.values());
     }
+
+    @Override
+    public int getCharacterCongruency(char character) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public int getNextState(int currentState, int characterCongruency) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
     
     private static class Edge {
         public final int startState;

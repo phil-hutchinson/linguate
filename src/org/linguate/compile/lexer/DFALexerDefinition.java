@@ -15,6 +15,8 @@ public interface  DFALexerDefinition
 {
     final int DEAD_STATE = -1;
     int getNextState(int currentState, char character);
+    int getCharacterCongruency(char character);
+    int getNextState(int currentState, int characterCongruency);
     GrammarTerminal accepts(int state);
     Set<GrammarTerminal> getAllAcceptTerminals();
 }
