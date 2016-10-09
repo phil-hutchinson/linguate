@@ -29,6 +29,7 @@ import static org.linguate.compile.lexergenerator.RegexNode.NodeType.*;
 public class DefaultRegexLexerGeneratorTest 
 {
     protected DefaultRegexLexerGenerator instance;
+    protected DefaultDFALexerDefinitionBuilder builder;
             
     public DefaultRegexLexerGeneratorTest() 
     {
@@ -48,6 +49,7 @@ public class DefaultRegexLexerGeneratorTest
     public void setUp() 
     {
         instance = new DefaultRegexLexerGenerator();
+        builder = new  DefaultDFALexerDefinitionBuilder();
     }
     
     @After
@@ -63,7 +65,7 @@ public class DefaultRegexLexerGeneratorTest
     {
         expectedException.expect(NullPointerException.class);
         TerminalPrioritizer prioritizer = new TerminalPrioritizerWrapper(new ArrayList<GrammarTerminal>());
-        instance.generate(null, prioritizer);
+        instance.generate(null, prioritizer, builder);
     }
     
     @Test
@@ -74,7 +76,7 @@ public class DefaultRegexLexerGeneratorTest
         RegexNodeWrapper mainLeaf = RegexNodeWrapper.CreateRegularLeaf("a");
         RegexNodeWrapper acceptLeaf = RegexNodeWrapper.CreateAcceptLeaf(terminal);
         RegexNodeWrapper rootNode = RegexNodeWrapper.CreateCatNode(mainLeaf, acceptLeaf);
-        instance.generate(rootNode, null);
+        instance.generate(rootNode, null, builder);
     }
     
     
@@ -94,7 +96,7 @@ public class DefaultRegexLexerGeneratorTest
         testCases.put("", null);
 
         TerminalPrioritizer prioritizer = new TerminalPrioritizerWrapper(terminal);
-        DFALexerDefinition definition = instance.generate(rootNode, prioritizer);
+        DFALexerDefinition definition = instance.generate(rootNode, prioritizer, builder);
         
         verify(definition, testCases);
     }
@@ -118,7 +120,7 @@ public class DefaultRegexLexerGeneratorTest
         testCases.put("", null);
 
         TerminalPrioritizer prioritizer = new TerminalPrioritizerWrapper(terminal);
-        DFALexerDefinition definition = instance.generate(rootNode, prioritizer);
+        DFALexerDefinition definition = instance.generate(rootNode, prioritizer, builder);
         
         verify(definition, testCases);
         
@@ -143,7 +145,7 @@ public class DefaultRegexLexerGeneratorTest
         testCases.put("", null);
 
         TerminalPrioritizer prioritizer = new TerminalPrioritizerWrapper(terminal);
-        DFALexerDefinition definition = instance.generate(rootNode, prioritizer);
+        DFALexerDefinition definition = instance.generate(rootNode, prioritizer, builder);
         
         verify(definition, testCases);
     }
@@ -170,7 +172,7 @@ public class DefaultRegexLexerGeneratorTest
         testCases.put("", terminal); // we will accept here, although lexer will ignore.
 
         TerminalPrioritizer prioritizer = new TerminalPrioritizerWrapper(terminal);
-        DFALexerDefinition definition = instance.generate(rootNode, prioritizer);
+        DFALexerDefinition definition = instance.generate(rootNode, prioritizer, builder);
         
         verify(definition, testCases);
     }
@@ -199,7 +201,7 @@ public class DefaultRegexLexerGeneratorTest
         testCases.put("", null);
 
         TerminalPrioritizer prioritizer = new TerminalPrioritizerWrapper(terminal);
-        DFALexerDefinition definition = instance.generate(rootNode, prioritizer);
+        DFALexerDefinition definition = instance.generate(rootNode, prioritizer, builder);
         
         verify(definition, testCases);
     }
@@ -233,7 +235,7 @@ public class DefaultRegexLexerGeneratorTest
         testCases.put("", null);
 
         TerminalPrioritizer prioritizer = new TerminalPrioritizerWrapper(terminal);
-        DFALexerDefinition definition = instance.generate(rootNode, prioritizer);
+        DFALexerDefinition definition = instance.generate(rootNode, prioritizer, builder);
         
         verify(definition, testCases);
     }
@@ -278,7 +280,7 @@ public class DefaultRegexLexerGeneratorTest
         testCases.put("", null);
 
         TerminalPrioritizer prioritizer = new TerminalPrioritizerWrapper(alphaTerminal, numericTerminal, operationTerminal);
-        DFALexerDefinition definition = instance.generate(rootNode, prioritizer);
+        DFALexerDefinition definition = instance.generate(rootNode, prioritizer, builder);
         
         verify(definition, testCases);
     }
@@ -314,7 +316,7 @@ public class DefaultRegexLexerGeneratorTest
         testCases.put("", null);
 
         TerminalPrioritizer prioritizer = new TerminalPrioritizerWrapper(keywordTerminal, identifierTerminal);
-        DFALexerDefinition definition = instance.generate(rootNode, prioritizer);
+        DFALexerDefinition definition = instance.generate(rootNode, prioritizer, builder);
         
         verify(definition, testCases);
     }

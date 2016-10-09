@@ -34,7 +34,7 @@ public class DefaultRegexLexerGenerator implements RegexLexerGenerator
     private TerminalPrioritizer terminalPrioritizer;
     
     @Override
-    public DFALexerDefinition generate(RegexNode rootNode, TerminalPrioritizer terminalPrioritizer) {
+    public DFALexerDefinition generate(RegexNode rootNode, TerminalPrioritizer terminalPrioritizer, DFALexerDefinitionBuilder builder) {
         if (rootNode == null) {
             throw new NullPointerException("Root node cannot be set to null.");
         }
@@ -49,7 +49,7 @@ public class DefaultRegexLexerGenerator implements RegexLexerGenerator
         processDepthFirst(rootNode, this::calculateFirstPos);
         processDepthFirst(rootNode, this::calculateLastPos);
         processDepthFirst(rootNode, this::calculateFollowPos);
-        return buildStatesAndEdges();
+        return buildStatesAndEdges(builder);
     }
 
     private void processDepthFirst(RegexNode node, Consumer<? super RegexNode> action) {
@@ -234,8 +234,7 @@ public class DefaultRegexLexerGenerator implements RegexLexerGenerator
         followPos.addAll(followNodes);
     }
 
-    private DFALexerDefinition buildStatesAndEdges() {
-        BuildableDFALexerDefinition builder = new BuildableDFALexerDefinition();
+    private DFALexerDefinition buildStatesAndEdges(DFALexerDefinitionBuilder builder) {
         Queue<Integer> statesToProcess = new ArrayDeque<>();
         Map<Integer, Set<RegexNode>> dfaStates = new HashMap<>();
         Map<Set<RegexNode>, Integer> dfaStateLookup = new HashMap<>();
@@ -317,6 +316,6 @@ public class DefaultRegexLexerGenerator implements RegexLexerGenerator
             }
         }
         
-        return builder;
+        return builder.getDefinition();
     }
 }
