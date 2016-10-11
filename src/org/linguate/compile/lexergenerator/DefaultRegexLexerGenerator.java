@@ -6,6 +6,7 @@ package org.linguate.compile.lexergenerator;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -300,7 +301,9 @@ public class DefaultRegexLexerGenerator implements RegexLexerGenerator
                     statesToProcess.add(toStateNumber);
                     nextState++;
                 }
-                builder.addTransition(processingStateNumber, ch, toStateNumber);
+                int congruencyGroup = ch;
+                builder.addCharactersToCongruency(ch, Arrays.asList(new Character[] { ch }) );
+                builder.addTransition(processingStateNumber, congruencyGroup, toStateNumber);
             }
             
             // determine if the DFA state currently being processed is an accepting

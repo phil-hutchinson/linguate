@@ -12,10 +12,9 @@ import org.linguate.compile.lexer.DFALexerDefinition;
  * @author phil
  */
 public interface DFALexerDefinitionBuilder {
-
+    void addCharactersToCongruency(int congruencyNumber, Iterable<Character> chars);
+    void addTransition(int fromState, int congruencyNumber, int toState);
     void addAccept(int state, GrammarTerminal accepts);
-
-    void addTransition(int fromState, char inputSymbol, int toState);
     
     DFALexerDefinition getDefinition();
 }

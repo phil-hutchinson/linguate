@@ -225,12 +225,12 @@ public class DFALexerWrappers
 
         @Override
         public int getCharacterCongruency(char character) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            throw new UnsupportedOperationException("Not required for test.");
         }
 
         @Override
         public int getNextState(int currentState, int characterCongruency) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            throw new UnsupportedOperationException("Not required for test.");
         }
         
     }

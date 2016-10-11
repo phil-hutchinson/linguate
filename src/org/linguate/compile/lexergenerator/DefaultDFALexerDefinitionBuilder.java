@@ -21,9 +21,23 @@ public class DefaultDFALexerDefinitionBuilder implements DFALexerDefinitionBuild
     public DefaultDFALexerDefinitionBuilder() {
         definition = new InternalDFALexerDefinition();
     }
+
     @Override
-    public void addTransition(int fromState, char inputSymbol, int toState) {
-        Edge edge = new Edge(fromState, inputSymbol);
+    public void addCharactersToCongruency(int congruencyNumber, Iterable<Character> chars) {
+        chars.forEach(ch -> {
+            if (definition.characterCongruencies.containsKey(ch)) {
+                if (definition.characterCongruencies.get(ch) != congruencyNumber) {
+                    throw new IllegalArgumentException("Character: " + ch + "has already been assigned to a different character congruency.");
+                }
+            } else {
+                definition.characterCongruencies.put(ch, congruencyNumber);
+            }
+        });
+    }
+    
+    @Override
+    public void addTransition(int fromState, int congruencyNumber, int toState) {
+        Edge edge = new Edge(fromState, congruencyNumber);
         definition.transitions.put(edge, toState);
     }
 
@@ -36,21 +50,21 @@ public class DefaultDFALexerDefinitionBuilder implements DFALexerDefinitionBuild
     public DFALexerDefinition getDefinition() {
         return definition;
     }
-    
+
     private static class Edge {
         public final int startState;
-        public final char inputSymbol;
+        public final int congruencyNumber;
 
-        public Edge(int startState, char inputSymbol) {
+        public Edge(int startState, int congruencyNumber) {
             this.startState = startState;
-            this.inputSymbol = inputSymbol;
+            this.congruencyNumber = congruencyNumber;
         }
 
         @Override
         public int hashCode() {
             int hash = 3;
             hash = 2819 * hash + this.startState;
-            hash = 2819 * hash + this.inputSymbol;
+            hash = 2819 * hash + this.congruencyNumber;
             return hash;
         }
 
@@ -69,7 +83,7 @@ public class DefaultDFALexerDefinitionBuilder implements DFALexerDefinitionBuild
             if (this.startState != other.startState) {
                 return false;
             }
-            if (this.inputSymbol != other.inputSymbol) {
+            if (this.congruencyNumber != other.congruencyNumber) {
                 return false;
             }
             return true;
@@ -77,17 +91,24 @@ public class DefaultDFALexerDefinitionBuilder implements DFALexerDefinitionBuild
     }
     
     private static class InternalDFALexerDefinition implements DFALexerDefinition {
+        private Map<Character, Integer> characterCongruencies = new HashMap<>();
         private Map<Integer, GrammarTerminal> acceptStates = new HashMap<>();
         private Map<Edge, Integer> transitions = new HashMap<>();
         
         @Override
         public int getNextState(int currentState, char character) {
-            Edge edge = new Edge(currentState, character);
-            if (transitions.containsKey(edge)) {
-                return transitions.get(edge);
+            if (characterCongruencies.containsKey(character)) {
+                int congruency = characterCongruencies.get(character);
+                Edge edge = new Edge(currentState, congruency);
+                if (transitions.containsKey(edge)) {
+                    return transitions.get(edge);
+                } else {
+                    return DEAD_STATE;
+                }
             } else {
                 return DEAD_STATE;
             }
+            
         }
 
         @Override
