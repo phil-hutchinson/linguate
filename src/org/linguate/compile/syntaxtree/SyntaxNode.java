@@ -5,7 +5,6 @@
 package org.linguate.compile.syntaxtree;
 
 import java.util.List;
-import org.linguate.compile.syntaxifier.SyntaxElement;
 
 /**
  *

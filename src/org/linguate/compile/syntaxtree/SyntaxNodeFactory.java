@@ -4,7 +4,6 @@
  */
 package org.linguate.compile.syntaxtree;
 
-import org.linguate.compile.syntaxifier.SyntaxElement;
 import org.linguate.compile.lexeme.Lexeme;
 
 /**
