@@ -43,13 +43,13 @@ public class DefaultVennPartitionerBaselineTest {
     public ExpectedException expectedException = ExpectedException.none();
     
     @Test
-    public void addRegularSubset_null_throws() {
+    public void addSubset_null_throws() {
         expectedException.expect(NullPointerException.class);
         instance.addSubset(null);
     }
     
     @Test
-    public void addComplementedSubset_null_throws() {
+    public void addSubsetByComplement_null_throws() {
         expectedException.expect(NullPointerException.class);
         instance.addSubsetByComplement(null);
     }
@@ -60,24 +60,6 @@ public class DefaultVennPartitionerBaselineTest {
         instance.addSubset(subset);
         int expectedValue = 1;
         int actualValue = instance.getRegularPartitionCount();
-        assertEquals(expectedValue, actualValue);
-    }
-    
-    @Test
-    public void getComplementedPartitionExists_true() {
-        Set<Character> subset = buildSet('a', 'b', 'c');
-        instance.addSubsetByComplement(subset);
-        boolean expectedValue = true;
-        boolean actualValue = instance.getComplementedPartitionExists();
-        assertEquals(expectedValue, actualValue);
-    }
-
-    @Test
-    public void getComplementedPartitionExists_false() {
-        Set<Character> subset = buildSet('a', 'b', 'c');
-        instance.addSubset(subset);
-        boolean expectedValue = false;
-        boolean actualValue = instance.getComplementedPartitionExists();
         assertEquals(expectedValue, actualValue);
     }
 
@@ -94,14 +76,14 @@ public class DefaultVennPartitionerBaselineTest {
     }
     
     @Test
-    public void getPartitionsForRegularSubset_null_throws() {
-        expectedException.expect(IndexOutOfBoundsException.class);
+    public void getPartitionsForSubset_null_throws() {
+        expectedException.expect(NullPointerException.class);
         instance.getPartitionsForSubset(null);
     }
     
     @Test
-    public void getPartitionsForComplementedSubset_null_throws() {
-        expectedException.expect(IndexOutOfBoundsException.class);
+    public void getPartitionsForSubsetByComplement_null_throws() {
+        expectedException.expect(NullPointerException.class);
         instance.getPartitionsForSubsetByComplement(null);
     }
             

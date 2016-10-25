@@ -92,7 +92,9 @@ public class DefaultVennPartitionerFunctionalityTest {
                     ? instance.getPartitionsForSubsetByComplement(currentSubset)
                     : instance.getPartitionsForSubset(currentSubset);
             for(int currentPartition : currentPartitions) {
-                partitionsToSourceSubsets[currentPartition].add(sourceIndex);
+                if (currentPartition != VennPartitioner.COMPLEMENTED_PARTITION_INDEX) {
+                    partitionsToSourceSubsets[currentPartition].add(sourceIndex);
+                }
             }
         }
         
