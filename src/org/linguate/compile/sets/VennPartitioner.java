@@ -7,20 +7,21 @@ package org.linguate.compile.sets;
 import java.util.Set;
 
 /**
- * A VennPartitioner creates a partition of a set based of input subsets of
- * this set, so that alike elements are grouped together, where elements are
- * alike iff they appear in the exact same set of input subsets. As a result
+ * A VennPartitioner partitions a universal set based on a set of input subsets of
+ * this set in such a way that "alike" elements are grouped together, where elements 
+ * are "alike" iff they appear in the exact same set of input subsets. As a result
  * of this process, each input subset can be defined as a union of a set
  * of partitions from the partitioned set.
  * 
- * <p>A simple way to understand this class is to consider a Venn diagram. Each
- * non-empty region of the Venn diagram will be a separate partition. So, for example,
- * if the Venn diagram has subsets  A and B, then there will be a partition for the
+ * <p>A simple way to visualize this is to consider a Venn diagram. Each non-empty 
+ * region of the Venn diagram will be a separate partition. So, for example, if 
+ * the Venn diagram has subsets  A and B, then there will be a partition for the
  * region containing elements from only set A, a partition for the region containing
  * elements from only set B, a partition for the region where A and B intersect, and
  * a partition for the region outside of both A and B. If a third set C is added, this
  * creates four new partitions: its intersection with A, its intersection with B, its
- * intersection with both A and B, 
+ * intersection with both A and B, and the subset containing items only from C. (Note
+ * that the VennPartitioner will only create partitions for non-empty regions.)
  * 
  * <p>The partitions themselves are referred to by integer index.
  * 
@@ -28,7 +29,8 @@ import java.util.Set;
  * they contain, or by their complement (i.e. by listing all elements they do not 
  * contain: so the elements the set does include in this case is the complement of 
  * the defining set with respect to the universal set. At most, one partition may 
- * be defined by its complement.
+ * be defined by its complement. A partition defined by its complement will exist iff
+ * at least one 
  * 
  * <p>Generation methods and retrieval methods can be interspersed, but the results
  * of retrieval methods are invalidated by subsequent calls to generation methods.

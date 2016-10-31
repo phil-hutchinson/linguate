@@ -18,7 +18,7 @@ public class BasicMathDFTNodeFactory implements DFTNodeFactory
 {
     
     @Override
-    public DFTNode CreateInnerNode(GrammarProduction production, List<DFTNode> children)
+    public DFTNode generateNodeForProduction(GrammarProduction production, List<DFTNode> children)
     {
         BasicMathGrammarNonTerminal testImplElement = (BasicMathGrammarNonTerminal) production.getHead();
         ArrayList<BasicMathDFTNode> typedChildren = new ArrayList<>();
@@ -54,7 +54,7 @@ public class BasicMathDFTNodeFactory implements DFTNodeFactory
     }
 
     @Override
-    public DFTNode CreateLeafNode(Lexeme element)
+    public DFTNode generateNodeForLexeme(Lexeme element)
     {
         if (element.getContents() == null)
         {

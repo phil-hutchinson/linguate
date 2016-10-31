@@ -71,7 +71,7 @@ public class LRParser
             
             if (nextNode == null && inputIterator.hasNext())
             {
-                nextNode = nodeFactory.CreateLeafNode(inputIterator.next());
+                nextNode = nodeFactory.generateNodeForLexeme(inputIterator.next());
             }
             
             if (nextNode == null)
@@ -112,7 +112,7 @@ public class LRParser
                         children.add(poppedItem.node);
                     }
                     Collections.reverse(children);
-                    DFTNode productionNode = nodeFactory.CreateInnerNode(rule, children);
+                    DFTNode productionNode = nodeFactory.generateNodeForProduction(rule, children);
                     LRParserState postReduceState = parseStack.peek().state.getPostReductionState(rule.getHead());
                     LRParserStackState newReduceState = new LRParserStackState(postReduceState, productionNode);
                     if (postReduceState == null)
