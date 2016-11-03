@@ -5,30 +5,21 @@
 package org.linguate.compile.lexer;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-import java.util.Stack;
 import org.linguate.compile.LexerException;
 import org.linguate.compile.grammar.GrammarTerminal;
 import static org.linguate.compile.lexer.DFALexerDefinition.DEAD_STATE;
 import org.linguate.compile.lexeme.Lexeme;
 
 /**
- *
+ * A DFALexer is a {@link org.linguate.compile.lexer.Lexer Lexer} that uses a
+ * deterministic finite automaton as a basis for its lexical analysis. The DFA
+ * is defined by a {@link org.linguate.compile.lexer.DFALexerDefinition DFALexerDefinition}
+ * that is passed in to the DFALexer.
+ * 
  * @author Phil Hutchinson
  */
 public class DFALexer implements Lexer
 {
-    protected interface SourceReader
-    {
-        boolean hasCharAt(int offset);
-        char getCharAt(int offset);
-        String getSequence(int startOffset, int length);
-        void canFree(int freeableToOffset);
-    }
-    
     private DFALexerDefinition definition;
     private LexemeFactory lexemeFactory;
     
@@ -119,7 +110,7 @@ public class DFALexer implements Lexer
                 else
                 {
                     String contents = sourceReader.getSequence(currSequenceOffset, longestAcceptEndOffset);
-                    result.add(lexemeFactory.CreateLexeme(longestAcceptTerminal, contents));
+                    result.add(lexemeFactory.createLexeme(longestAcceptTerminal, contents));
                     currSequenceOffset = longestAcceptEndOffset;
                     currState = 0;
                     nextCharOffset = currSequenceOffset;
@@ -131,6 +122,14 @@ public class DFALexer implements Lexer
         }
         
         return result;
+    }
+    
+    protected interface SourceReader
+    {
+        boolean hasCharAt(int offset);
+        char getCharAt(int offset);
+        String getSequence(int startOffset, int length);
+        void canFree(int freeableToOffset);
     }
     
     private static class StringSourceReader implements DFALexer.SourceReader

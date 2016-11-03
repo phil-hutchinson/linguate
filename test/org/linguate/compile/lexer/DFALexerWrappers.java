@@ -263,7 +263,7 @@ public class DFALexerWrappers
     {
 
         @Override
-        public Lexeme CreateLexeme(GrammarTerminal terminal, String contents)
+        public Lexeme createLexeme(GrammarTerminal terminal, String contents)
         {
             return new LexemeWrapper(terminal, contents);
         }
