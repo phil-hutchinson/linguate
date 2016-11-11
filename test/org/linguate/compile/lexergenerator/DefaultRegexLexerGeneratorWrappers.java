@@ -15,7 +15,7 @@ import static org.linguate.compile.lexergenerator.RegexNode.NodeType.*;
 
 /**
  *
- * @author phil
+ * @author Phil Hutchinson
  */
 public class DefaultRegexLexerGeneratorWrappers {
     public static class GrammarTerminalWrapper implements GrammarTerminal

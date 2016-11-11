@@ -21,8 +21,10 @@ import org.linguate.compile.lexer.DFALexerDefinition;
 import org.linguate.compile.lexergenerator.RegexNode.NodeType;
 
 /**
- *
- * @author phil
+ * Default implementation for {@link org.linguate.compile.lexergenerator.RegexLexerGenerator
+ * RegexLexerGenerator}
+ * 
+ * @author Phil Hutchinson
  */
 public class DefaultRegexLexerGenerator implements RegexLexerGenerator
 {

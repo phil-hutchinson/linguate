@@ -24,7 +24,7 @@ import static org.linguate.compile.lexergenerator.RegexNode.NodeType.*;
 
 /**
  *
- * @author phil
+ * @author Phil Hutchinson
  */
 public class DefaultRegexLexerGeneratorTest 
 {

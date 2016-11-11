@@ -12,8 +12,10 @@ import org.linguate.compile.grammar.GrammarTerminal;
 import org.linguate.compile.lexer.DFALexerDefinition;
 
 /**
- *
- * @author phil
+ * Default implementation for {@link org.linguate.compile.lexergenerator.DFALexerDefinitionBuilder
+ * DFALexerDefinitionBuilder}
+ * 
+ * @author Phil Hutchinson
  */
 public class DefaultDFALexerDefinitionBuilder implements DFALexerDefinitionBuilder {
     private InternalDFALexerDefinition definition;
