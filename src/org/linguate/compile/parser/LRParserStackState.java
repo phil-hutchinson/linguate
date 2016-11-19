@@ -7,7 +7,8 @@ package org.linguate.compile.parser;
 import org.linguate.compile.dft.DFTNode;
 
 /**
- *
+ * The LRParserStackState is used to maintain information for each
+ * item on the LRParser stack.
  * @author Phil Hutchinson
  */
 class LRParserStackState
