@@ -18,7 +18,7 @@ import java.util.*;
  * of context-free grammars are widely available.
  * 
  * <p>Grammar producers should return read-only versions of collections (for example
- * using the unmodifiable* static methods in {@link java.util.Collections Collections}.
+ * using the unmodifiable* static methods in {@link java.util.Collections Collections}).
  * 
  * <p>Grammar consumers should treat all collections received as read-only.
  * 
@@ -28,7 +28,7 @@ import java.util.*;
  * for a deterministic context-free language if used by an LRParser.
  * 
  * @see <a href="https://en.wikipedia.org/wiki/Context-free_grammar">Context-Free
- * Grammar article on Wikipedia</a>
+ * Grammar on Wikipedia</a>
  * 
  * @author Phil Hutchinson
  */

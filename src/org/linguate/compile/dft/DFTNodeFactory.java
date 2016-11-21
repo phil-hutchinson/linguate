@@ -43,7 +43,7 @@ public interface DFTNodeFactory
      * Cannot be null, and must be part of the grammar the DFTNodeFactory is designed for.
      * @param children A list of grammar elements that this production is using. Number of children
      * must be equal to length of body of production rule.
-     * @return A DFTNode consistent with the grammar production.
+     * @return a DFTNode consistent with the grammar production
      */
     DFTNode generateNodeForProduction(GrammarProduction production, List<DFTNode> children);
 
@@ -54,7 +54,7 @@ public interface DFTNodeFactory
      * as per the grammar the DFTNodeFactory is designed for.
      * @param element A lexeme with a grammar terminal that is part of the grammar that the
      * DFTNodeFactory handles.
-     * @return A DFTNode consistent with the lexeme.
+     * @return a DFTNode consistent with the lexeme
      */
     DFTNode generateNodeForLexeme(Lexeme element);
 }

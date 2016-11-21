@@ -8,7 +8,7 @@ import org.linguate.compile.grammar.GrammarTerminal;
 import org.linguate.compile.lexeme.Lexeme;
 
 /**
- * A LesemeFactory is responsible for generating the {@link org.linguate.compile.lexeme.Lexeme 
+ * A LexemeFactory is responsible for generating the {@link org.linguate.compile.lexeme.Lexeme 
  * Lexeme}, allowing the lexer itself to offload this process, as it does not 
  * need to be aware of exactly which Lexeme-implementing class will be used.
  * 
@@ -28,8 +28,8 @@ public interface LexemeFactory
      * @param terminal The {@link org.linguate.compile.grammar.GrammarTerminal
      * GrammarTerminal} to create the lexeme for.
      * @param contents The sequence of characters in the input file that was 
-     * matched to make the 
-     * @return The generated lexeme.
+     * matched to make the lexeme
+     * @return the generated lexeme
      */
     Lexeme createLexeme(GrammarTerminal terminal, String contents);
 }

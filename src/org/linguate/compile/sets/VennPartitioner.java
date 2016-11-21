@@ -43,7 +43,8 @@ import java.util.Set;
  * the case of a RegEx tree, the character class (i.e. the set of accepted characters) 
  * of each leaf node would be passed as a distinct subset. This process would create
  * a set of partitions, where all characters in the same partition are accepted by
- * the exact same set of partitions - so that 
+ * the exact same set of partitions - so that all characters in the same partition
+ * can be treated as "congruent", since they always behave the same.
  * 
  * @author Phil Hutchinson
  * @param <TElement> The type of element contained by the universal set.
@@ -78,9 +79,9 @@ public interface VennPartitioner<TElement> {
 
     /**
      * Returns the number of partitions the universal set has been
-     * separated into.
+     * separated into, excluding the complemented partition.
      * 
-     * @return The number of partition.
+     * @return The number of regular partitions.
      */
     int getRegularPartitionCount();
 

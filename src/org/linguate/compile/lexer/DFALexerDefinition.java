@@ -24,21 +24,21 @@ import org.linguate.compile.grammar.GrammarTerminal;
  * 
  * <p>The DFALexerDefinition also introduces the concept of character congruency. Two
  * characters are considered congruent if they behave identically with respect to 
- * all transitions - i.e. for two characters x and y, if for each start state of 
+ * all transitions - i.e. for two characters x and y, if for every start state of 
  * a transition, both x and y result in the same end state, then x and y are congruent.
- * The purpose of defining congruent characters is to reduce the size of the size of
- * the DFADefinition.
+ * The purpose of defining congruent characters is to reduce the size of the
+ * DFADefinition.
  * 
- * <p>The start state is 0, and must always be valid. 
+ * <p>The start state is defined by the constant START_STATE, and must always be valid. 
  * 
  * There are two ways of determining transitions. Both methods should always
  * result in the same value:
- * <p><ol>
+ * <ol>
  * <li>By directly calling {@link #getNextState(int, char) getNextState(int,char)}
  *  specifying the start state and input character.
  * <li>By first calling {@link #getCharacterCongruency(char) getCharacterCongruency}
  * to get the group the character belongs to, and then calling {@link #getNextState(int, int) 
- * getNextState(int, int)} specifying the start state and the congrency group 
+ * getNextState(int, int)} specifying the start state and the congruency group 
  * obtained from the first call.
  * </ol>
  * @author Phil Hutchinson
@@ -53,8 +53,8 @@ public interface  DFALexerDefinition
     /** 
      * Pseudo-state used when there is no valid transition from a state for an input.
      * A transition to DEAD_STATE indicates that the current input is invalid,
-     * and no subsequent sequence of characters is valid - i.e. the result of any 
-     * transition from the dead state will be the dead state.
+     * and no subsequent sequence of characters would lead to an accepting state - 
+     * i.e. the result of any transition from the dead state will be the dead state.
      * 
      */
     final int DEAD_STATE = -1;

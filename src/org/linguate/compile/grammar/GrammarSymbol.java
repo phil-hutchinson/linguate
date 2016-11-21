@@ -18,7 +18,7 @@ package org.linguate.compile.grammar;
      * Returns the name of the grammar symbol. Within a context-free grammar,
      * the names of all grammar symbols should be unique.
      * 
-     * @return The name of the grammar symbol.
+     * @return the name of the grammar symbol
      */
     String getName();
 }

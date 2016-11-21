@@ -11,7 +11,7 @@ import org.linguate.compile.lexer.DFALexerDefinition;
  * A DFALexerDefinitionBuilder is used to build a {@link org.linguate.compile.lexer.DFALexerDefinition
  * DFALexerDefinition}. It has a building phase (where it begins), and a completed phase that 
  * doesn't allow any further changes. At this point, the DFALexerDefinitionBuilder has 
- * served its purpose and is no further use.
+ * served its purpose and is of no further use.
  * 
  * <p>During the building phase, the {@link #addCharactersToCongruency(int, java.lang.Iterable) 
  * addCharactersToCongruency}, {@link #addTransition(int, int, int) addTransition},

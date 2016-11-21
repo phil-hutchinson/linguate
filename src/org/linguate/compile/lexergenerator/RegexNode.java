@@ -76,7 +76,7 @@ public interface RegexNode {
      * 
      * <p>This method can only called for leaf nodes. A leaf node should either
      * return a set of characters from this method, or a terminal from {@link
-     * #acceptsTerminal() acceptsTerminal), but not both.
+     * #acceptsTerminal() acceptsTerminal}, but not both.
      * 
      * @return characters accepted by leaf node
      */
@@ -88,7 +88,7 @@ public interface RegexNode {
      * 
      * <p>This method can only called for leaf nodes. A leaf node should either
      * return a set of characters from this method, or a terminal from {@link
-     * #getCharacterSet()  getCharacterSet), but not both.
+     * #getCharacterSet()  getCharacterSet)}, but not both.
      * 
      * @return the GrammarTerminal accepted by this node, or null if no grammar
      * terminal is accepted

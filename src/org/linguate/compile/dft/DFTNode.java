@@ -12,7 +12,7 @@ import org.linguate.compile.grammar.GrammarSymbol;
  * processes its elements.
  * 
  * <p>The DFTNode and its companion {@link org.linguate.compile.dft.DFTNodeFactory 
- * DFTNodeFactory) are primarily for use by bottom-up parsers to offload the work
+ * DFTNodeFactory} are primarily for use by bottom-up parsers to offload the work
  * of generating the nodes of the parse tree, so that the parser itself does not 
  * need to be aware which DFTNode-implementing class is being instantiated.
  * 
@@ -27,7 +27,7 @@ public interface DFTNode
 
     /**
      * Provides the grammar symbol this node holds.
-     * @return The grammar symbol of the node.
+     * @return the grammar symbol of the node
      */
     GrammarSymbol getElement();
 }
