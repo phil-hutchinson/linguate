@@ -83,6 +83,7 @@ The main tasks to be completed for phase one include:
 * the parser generator
 * the web interface (all)
 * clean-up of unit tests (consistent methodology and approach)
+* readers and writers
 
 ## Future Enhancements
 The following features will be added in future. The order they are listed provides a rough idea on their relative priority.
