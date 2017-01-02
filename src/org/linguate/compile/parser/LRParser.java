@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Stack;
 import org.linguate.compile.dft.DFTNode;
 import org.linguate.compile.dft.DFTNodeFactory;
-import org.linguate.compile.parser.LRParserAction.ActionType;
 import org.linguate.compile.ParserException;
 import org.linguate.compile.lexeme.Lexeme;
 /**
@@ -37,7 +36,7 @@ public class LRParser
         boolean stillProcessing = true;
         Stack<LRParserStackState> parseStack = new Stack<>();
         DFTNode nextNode = null;
-        LRParserAction nextAction = null;
+        LRParserDefinition.ActionType nextActionType = null;
         
         if (input == null)
         {
@@ -50,7 +49,7 @@ public class LRParser
             return null;
         }
         
-        LRParserStackState initialState = new LRParserStackState((definition.getStartState()), null);
+        LRParserStackState initialState = new LRParserStackState(LRParserDefinition.START_STATE, null);
         parseStack.push(initialState);
         
         while (stillProcessing)
@@ -67,43 +66,49 @@ public class LRParser
             }
             System.out.println(currentStackContents);
             */
-            LRParserState stackTop = parseStack.peek().state;
+            int stackTop = parseStack.peek().state;
             
             if (nextNode == null && inputIterator.hasNext())
             {
                 nextNode = nodeFactory.generateNodeForLexeme(inputIterator.next());
             }
+            GrammarTerminal nextTerminal;
             
             if (nextNode == null)
             {
-                nextAction = stackTop.getEndOfInputAction();
+                nextTerminal = null;
             }
             else
             { 
-                GrammarTerminal nextTerminal = (GrammarTerminal) nextNode.getElement();
-                nextAction = stackTop.getAction(nextTerminal);
+                nextTerminal = (GrammarTerminal) nextNode.getElement();
             }
             
-            if (nextAction == null)
-            {
-                throw new ParserException("Parse Error (missing action)"); // ENHANCEMENT: better error handling capabilities
-            }
+            nextActionType = definition.getActionType(stackTop, nextTerminal);
             
-            switch (nextAction.getAction())
+            switch (nextActionType)
             {
+                case Reject:
+                    throw new ParserException("Input Rejected"); // ENHANCEMENT: better error handling capabilities
+                    
                 case Accept:
+                {
                     stillProcessing = false;
                     result = parseStack.pop().node;
+                }
                 break;
                 
                 case Shift:
-                    LRParserStackState newShiftState = new LRParserStackState(nextAction.getShiftState(), nextNode);
+                {
+                    int shiftState = definition.getShiftState(stackTop, nextTerminal);
+                    LRParserStackState newShiftState = new LRParserStackState(shiftState, nextNode);
                     parseStack.push(newShiftState);
                     nextNode = null;
+                }
                 break;
                 
                 case Reduce:
-                    GrammarProduction rule = nextAction.getReduceRule();
+                {
+                    GrammarProduction rule = definition.getReduceRule(stackTop, nextTerminal);
                     int childrenCount = rule.getBodyLength();
                     List<DFTNode> children = new ArrayList<>(childrenCount);
                     for (int indexPos = 0; indexPos < childrenCount; indexPos++)
@@ -113,13 +118,16 @@ public class LRParser
                     }
                     Collections.reverse(children);
                     DFTNode productionNode = nodeFactory.generateNodeForProduction(rule, children);
-                    LRParserState postReduceState = parseStack.peek().state.getPostReductionState(rule.getHead());
-                    LRParserStackState newReduceState = new LRParserStackState(postReduceState, productionNode);
-                    if (postReduceState == null)
+                    int topState = parseStack.peek().state;
+                    int postReduceState = definition.getPostReductionState(topState, rule.getHead());
+                    if (postReduceState == LRParserDefinition.NO_POST_REDUCTION_STATE)
                     {
                         throw new ParserException("Parser Error (missing post reduce state)");
                     }
+                    LRParserStackState newReduceState = new LRParserStackState(postReduceState, productionNode);
                     parseStack.push(newReduceState);
+                }
+                break;
             }
                 
         }

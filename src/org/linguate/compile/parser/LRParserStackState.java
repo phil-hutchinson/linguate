@@ -13,10 +13,10 @@ import org.linguate.compile.dft.DFTNode;
  */
 class LRParserStackState
 {
-    public LRParserState state;
+    public int state;
     public DFTNode node;
 
-    public LRParserStackState(LRParserState state, DFTNode node)
+    public LRParserStackState(int state, DFTNode node)
     {
         this.state = state;
         this.node = node;
