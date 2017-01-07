@@ -31,8 +31,7 @@ public interface LRParserDefinition
      * input. This should only happen at then end of input.
      * <p>The Shift action indicates that the parser should shift the next
      * {@link org.linguate.compile.grammar.GrammarTerminal GrammarTerminal} onto 
-     * the stack, and then what {@link org.linguate.compile.parser.LRParserState 
-     * LRParserState} to change to.
+     * the stack, and then what parser state to change to.
      * <p>The Reduce action indicates that the parser should reduce the symbols
      * at the top of the stack (i.e. replace a series of symbols with a non-terminal)
      */
@@ -74,7 +73,8 @@ public interface LRParserDefinition
      * that specifies the details for the reduction. Specifically, the parser will replace
      * the top n symbols on the stack with the head of the production rule, where n
      * is the number of items in the body of the production rule. This method should 
-     * only be called when {@link #getAction() getAction} returns ActionType.Reduce
+     * only be called when {@link #getActionType(int, org.linguate.compile.grammar.GrammarTerminal) 
+     * getActionType} returns ActionType.Reduce
      * @param state The current state of the parser
      * @param nextSymbol The next grammar terminal in the input.
      * @return the grammar production to use as a basis for reduction
