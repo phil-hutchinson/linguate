@@ -58,7 +58,11 @@ public interface LRParserDefinitionBuilder {
      * GrammarTerminal.
      * 
      * Throws if a shift or reduce rule has already been added for the 
-     * state/nextSymbol combination.
+     * state/nextSymbol combination, or if nextSymbol is null and an accept
+     * rule has already been added for the same state.
+     * 
+     * If nextSymbol is null, this adds a reduction rule that will occur
+     * on end of input.
      * 
      * The state must have been previously created using {@link #addState() 
      * addState}: otherwise this method throws.
@@ -69,6 +73,19 @@ public interface LRParserDefinitionBuilder {
      */
     void addReduction(int state, GrammarTerminal nextSymbol, GrammarProduction production);
 
+    /**
+     * Adds a rule for an accept, based on the current state. Accepts will only
+     * occur on end of input, so there is an implied {@code GrammarTerminal nextSymbol}
+     * that is always null.
+     * 
+     * Throws if a {@link #addReduction(int, org.linguate.compile.grammar.GrammarTerminal, 
+     * org.linguate.compile.grammar.GrammarProduction) addReduction} has been called
+     * for the same state, with null as the nextSymbol, or addAccept has been called
+     * for the same state.
+     * @param state the state at the top of the parser stack
+     */
+    void addAccept(int state);
+    
     /**
      * Adds a rule used to determine the state after a reduction.
      * 

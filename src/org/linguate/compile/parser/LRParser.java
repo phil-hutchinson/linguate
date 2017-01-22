@@ -100,6 +100,9 @@ public class LRParser
                 case Shift:
                 {
                     int shiftState = definition.getShiftState(stackTop, nextTerminal);
+                    if (shiftState == LRParserDefinition.NO_SHIFT_STATE) {
+                        throw new ParserException("Invalid shift");
+                    }
                     LRParserStackState newShiftState = new LRParserStackState(shiftState, nextNode);
                     parseStack.push(newShiftState);
                     nextNode = null;
@@ -109,6 +112,9 @@ public class LRParser
                 case Reduce:
                 {
                     GrammarProduction rule = definition.getReduceRule(stackTop, nextTerminal);
+                    if (rule == null) {
+                        throw new ParserException("Invalid reduction");
+                    }
                     int childrenCount = rule.getBodyLength();
                     List<DFTNode> children = new ArrayList<>(childrenCount);
                     for (int indexPos = 0; indexPos < childrenCount; indexPos++)

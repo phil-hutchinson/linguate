@@ -48,6 +48,7 @@ public interface LRParserDefinition
      */
     final int START_STATE = 0;
     final int NO_POST_REDUCTION_STATE = -1;
+    final int NO_SHIFT_STATE = -1;
     
     /**
      * Gets the ActionType of this LRParserAction
@@ -62,6 +63,10 @@ public interface LRParserDefinition
      * This method should only be called when {@link #getActionType(int, 
      * org.linguate.compile.grammar.GrammarTerminal) getActionType} returns 
      * ActionType.Shift
+     * 
+     * returns {@link #NO_SHIFT_STATE NO_SHIFT_STATE} if no shift state exists
+     * for (state, nextSymbol).
+     * 
      * @param state The current state of the parser
      * @param nextSymbol The next grammar terminal in the input.
      * @return the state number the parser will be in after performing shift.
@@ -75,6 +80,10 @@ public interface LRParserDefinition
      * is the number of items in the body of the production rule. This method should 
      * only be called when {@link #getActionType(int, org.linguate.compile.grammar.GrammarTerminal) 
      * getActionType} returns ActionType.Reduce
+     * 
+     * returns null if no reduction rule exists
+     * for (state, nextSymbol).
+     * 
      * @param state The current state of the parser
      * @param nextSymbol The next grammar terminal in the input.
      * @return the grammar production to use as a basis for reduction
@@ -88,6 +97,9 @@ public interface LRParserDefinition
      * head of the rule is used to help determine the resultant states
      * @param state The state of the stack item directly preceding the items
      * that are being reduced.
+     * 
+     * returns null if no post reduction state exists for (state, productionHead).
+     * 
      * @param productionHead the head of the production rule that triggered the
      * reduction, which will now replace its children on the parser stack.
      * @return the new state number the parser should be in post-reduction
