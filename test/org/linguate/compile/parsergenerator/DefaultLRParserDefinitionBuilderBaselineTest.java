@@ -249,7 +249,7 @@ public class DefaultLRParserDefinitionBuilderBaselineTest {
         LRParserDefinition definition = instance.getDefinition();
         
         ActionType expectedAction = ActionType.Accept;
-        ActionType actualAction = definition.getActionType(startState, terminal);
+        ActionType actualAction = definition.getActionType(startState, null);
         assertEquals(expectedAction, actualAction);
     }
 
